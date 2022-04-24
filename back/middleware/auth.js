@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const connectdb = require('../connectdb');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 require('dotenv').config();
 
 module.exports = (req, res, next) => {
