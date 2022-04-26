@@ -7,13 +7,13 @@ let user = new User();
 
 
 exports.signup = (req, res, next) => {
-    let { firstName, lastName, email, password } = req.body;
+    let { lastName, firstName, email, password } = req.body;
     if (zxcvbn(password).score < 2) {
         return res.status(401).json({ error: "Le mot de passe est trop faible" })
     };
     bcrypt.hash(password, 10)
         .then(hash => {
-            let sqlInserts = [firstName, lastName, email, hash];
+            let sqlInserts = [lastName, firstName, email, hash];
             user.signup(sqlInserts)
                 .then((response) => {
                     res.status(201).json(JSON.stringify(response))
@@ -54,8 +54,8 @@ exports.seeMyProfile = (req, res, next) => {
 
 exports.updateUser = (req, res, next) => {
     const userId = user.getUserIdToken(req.headers.authorization)
-    let { firstName, lastName, email } = req.body;
-    let sqlInserts = [firstName, lastName, email, userId];
+    let { lastName, firstName, email } = req.body;
+    let sqlInserts = [lastName, firstName, email, userId];
     user.updateUser(sqlInserts)
         .then((response) => {
             res.status(200).json(JSON.stringify(response))

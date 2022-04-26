@@ -50,7 +50,7 @@ class User {
     };
 
     seeMyProfile(sqlInserts) {
-        let sql = 'SELECT firstName, lastName, email FROM user WHERE id = ?';
+        let sql = 'SELECT lastName, firstName, email FROM user WHERE id = ?';
         sql = mysql.format(sql, sqlInserts);
         return new Promise((resolve, reject) => {
             connectdb.query(sql, function(error, result) {
@@ -61,7 +61,7 @@ class User {
     };
 
     updateUser(sqlInserts) {
-        let sql = 'UPDATE user SET firstName = ?, lastName = ?, email = ? WHERE id = ?';
+        let sql = 'UPDATE user SET lastName = ?, firstName = ?, email = ? WHERE id = ?';
         sql = mysql.format(sql, sqlInserts);
         return new Promise((resolve, reject) => {
             connectdb.query(sql, function(error, result) {
