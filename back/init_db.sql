@@ -34,10 +34,10 @@ insert into user  VALUES
 (null, 'nom', 'prenom', 'ffdzr@fdfdsf', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy",NOW() ) , 
 (null, 'nom2', 'prenom2','ffdzr@fdfdsf2', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy", NOW() ) 
 ;
-insert into post (created_at, content, image, id_author) VALUES
-(NOW(), "fgdoifdoigj", "iumage.jpg", 2),
-(NOW(), "fgdoifdoigj", "iumage.jpg", 1),
-(NOW(), "fgdoifdoigj", "iumage.jpg", 2),
-(NOW(), "fgdoifdoigj", "iumage.jpg", 1),
-(NOW(), "fgdoifdoigj", "iumage.jpg", 2)
+insert into post (content, image, id_author, created_at) VALUES
+("fgdoifdoigj", "iumage.jpg", 2, NOW() ),
+("fgdoifdoigj", "iumage.jpg", 1, NOW() ),
+("fgdoifdoigj", "iumage.jpg", 2 ,NOW() ),
+("fgdoifdoigj", "iumage.jpg", 1, NOW() ),
+("fgdoifdoigj", "iumage.jpg", 2, NOW() )
 ;
