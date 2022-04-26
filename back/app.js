@@ -15,5 +15,4 @@ app.use(bodyParser.json());
 
 app.use('/api/auth', userRoutes);
 
-
 module.exports = app;

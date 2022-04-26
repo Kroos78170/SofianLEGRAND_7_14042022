@@ -1,16 +1,14 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../mods/user')
+const User = require('../mods/user');
+const zxcvbn = require('zxcvbn');
 
 let user = new User();
 
 
 exports.signup = (req, res, next) => {
-    let firstName = req.body.firstName;
-    let lastName = req.body.lastName;
-    let email = req.body.email;
-    let password = req.body.password;
-    if (zxcvbn(req.body.password).score < 2) {
+    let { firstName, lastName, email, password } = req.body;
+    if (zxcvbn(password).score < 2) {
         return res.status(401).json({ error: "Le mot de passe est trop faible" })
     };
     bcrypt.hash(password, 10)
@@ -30,8 +28,7 @@ exports.signup = (req, res, next) => {
 
 
 exports.login = (req, res, next) => {
-    let email = req.body.email;
-    let password = req.body.password;
+    let { email, password } = req.body;
     let sqlInserts = [email];
     user.login(sqlInserts, password)
         .then((response) => {
@@ -43,9 +40,7 @@ exports.login = (req, res, next) => {
 };
 
 exports.seeMyProfile = (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, 'process.env.USER_TOKEN');
-    const userId = decodedToken.userId;
+    const userId = user.getUserIdToken(req.headers.authorization)
     let sqlInserts = [userId];
     user.seeMyProfile(sqlInserts)
         .then((response) => {
@@ -58,12 +53,8 @@ exports.seeMyProfile = (req, res, next) => {
 };
 
 exports.updateUser = (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, 'process.env.USER_TOKEN');
-    const userId = decodedToken.userId;
-    let firstName = req.body.firstName;
-    let lastName = req.body.lastName;
-    let email = req.body.email;
+    const userId = user.getUserIdToken(req.headers.authorization)
+    let { firstName, lastName, email } = req.body;
     let sqlInserts = [firstName, lastName, email, userId];
     user.updateUser(sqlInserts)
         .then((response) => {
@@ -75,9 +66,7 @@ exports.updateUser = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, 'process.env.USER_TOKEN');
-    const userId = decodedToken.userId;
+    const userId = user.getUserIdToken(req.headers.authorization)
     let sqlInserts = [userId];
     user.deleteUser(sqlInserts)
         .then((response) => {

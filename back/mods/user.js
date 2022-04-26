@@ -1,16 +1,14 @@
 const connectdb = require('../connectdb.js');
 const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 
 
 class User {
-    constructor() {
-        console.log('Nouvelle class User créee !')
-    }
     signup(sqlInserts) {
-        let sql = 'INSERT INTO users VALUES(NULL, ?, ?, ?, ?, NOW())';
+        let sql = 'INSERT INTO user VALUES(NULL, ?, ?, ?, ?, NOW())';
         sql = mysql.format(sql, sqlInserts);
         return new Promise((resolve, reject) => {
             connectdb.query(sql, function(error, result) {
@@ -21,7 +19,7 @@ class User {
     };
 
     login(sqlInserts, password) {
-        let sql = 'SELECT * FROM users WHERE email = ?';
+        let sql = 'SELECT * FROM user WHERE email = ?';
         sql = mysql.format(sql, sqlInserts);
 
         return new Promise((resolve, reject) => {
@@ -39,7 +37,7 @@ class User {
                                         userId: result[0].id,
                                         moderation: result[0].moderation
                                     },
-                                    'RANDOM_TOKEN_SECRET', { expiresIn: '24h' }
+                                    process.env.USER_TOKEN, { expiresIn: '24h' }
                                 ),
                                 moderation: result[0].moderation
                             });
@@ -52,30 +50,29 @@ class User {
     };
 
     seeMyProfile(sqlInserts) {
-        let sql = 'SELECT firstName, lastName, email FROM users WHERE id = ?';
+        let sql = 'SELECT firstName, lastName, email FROM user WHERE id = ?';
         sql = mysql.format(sql, sqlInserts);
         return new Promise((resolve, reject) => {
             connectdb.query(sql, function(error, result) {
                 if (error) return reject({ error: 'page indisponible' });
-                resolve(result);
+                resolve(result[0]);
             })
         })
     };
 
     updateUser(sqlInserts) {
-        let sql = 'UPDATE users SET firstName = ?, lastName = ?, email = ? WHERE id = ?';
+        let sql = 'UPDATE user SET firstName = ?, lastName = ?, email = ? WHERE id = ?';
         sql = mysql.format(sql, sqlInserts);
         return new Promise((resolve, reject) => {
-            connectdb.query(sql, function(err, result) {
-                if (err) return reject({ error: 'fonction indisponible' });
+            connectdb.query(sql, function(error, result) {
+                if (error) return reject({ error: 'fonction indisponible' });
                 resolve({ message: 'Informations mises à jour !' });
             })
-
         })
     };
 
     deleteUser(sqlInserts) {
-        let sql = 'DELETE FROM users WHERE id = ?';
+        let sql = 'DELETE FROM user WHERE id = ?';
         sql = mysql.format(sql, sqlInserts);
         return new Promise((resolve, reject) => {
             connectdb.query(sql, function(error, result) {
@@ -86,6 +83,12 @@ class User {
         })
 
     };
+
+    getUserIdToken(authorizationBearer) {
+        const token = authorizationBearer.split(' ')[1];
+        const decodedToken = jwt.verify(token, process.env.USER_TOKEN);
+        return decodedToken.userId;
+    }
 };
 
 module.exports = User;

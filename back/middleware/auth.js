@@ -1,25 +1,24 @@
-const jwt = require('jsonwebtoken');
 const connectdb = require('../connectdb');
 const mysql = require('mysql2');
+const User = require("../mods/user");
 require('dotenv').config();
-
+const user = new User()
 module.exports = (req, res, next) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'process.env.USER_TOKEN');
-        const userId = decodedToken.userId;
+        const userId = user.getUserIdToken(req.headers.authorization)
         let sqlInserts = [userId];
-        let sql = 'SELECT COUNT(id) FROM users WHERE id=?';
+        let sql = 'SELECT COUNT(id) as count FROM user WHERE id=?';
         sql = mysql.format(sql, sqlInserts);
         connectdb.query(sql, function(error, result) {
-            if (error) reject({ error: 'Erreur dans l\'inscription' });
-            if (result[0]['COUNT(id)'] !== 1) {
-                throw 'Token invalide';
+            if (error) throw new Error('Error SQL');
+            console.log(result)
+            if (result[0]['count'] !== 1) {
+                throw new Error('Token invalide');
             } else {
                 next();
             }
         })
     } catch (error) {
-        res.status(401).json({ error: error | 'Requête non authentifiée!' })
+        res.status(401).json({ error: error.message | 'Requête non authentifiée!' })
     }
 };
