@@ -31,8 +31,8 @@ CREATE TABLE comment(
 ) DEFAULT CHARSET UTF8 ;
 
 insert into user  VALUES
-(null,  'prenom','nom', 'ffdzr@fdfdsf', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy",NOW() ) , 
-(null, 'prenom2','nom2','ffdzr@fdfdsf2', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy", NOW() ) 
+(null, 'nom', 'prenom', 'ffdzr@fdfdsf', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy",NOW() ) , 
+(null, 'nom2', 'prenom2','ffdzr@fdfdsf2', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy", NOW() ) 
 ;
 insert into post (created_at, content, image, id_author) VALUES
 (NOW(), "fgdoifdoigj", "iumage.jpg", 2),
