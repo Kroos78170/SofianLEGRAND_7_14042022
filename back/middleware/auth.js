@@ -1,11 +1,11 @@
 const connectdb = require('../connectdb');
 const mysql = require('mysql2');
-const User = require("../mods/user");
+const tools = require('../utilities/tools');
 require('dotenv').config();
-const user = new User()
+
 module.exports = (req, res, next) => {
     try {
-        const userId = user.getUserIdToken(req.headers.authorization)
+        const userId = tools.getUserIdToken(req.headers.authorization)
         let sqlInserts = [userId];
         let sql = 'SELECT COUNT(id) as count FROM user WHERE id=?';
         sql = mysql.format(sql, sqlInserts);
@@ -19,6 +19,7 @@ module.exports = (req, res, next) => {
             }
         })
     } catch (error) {
+        console.log(error)
         res.status(401).json({ error: error.message | 'Requête non authentifiée!' })
     }
 };

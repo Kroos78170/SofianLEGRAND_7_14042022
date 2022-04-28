@@ -3,6 +3,8 @@ const app = express();
 const bodyParser = require('body-parser');
 
 const userRoutes = require('./routes/user');
+const postRoutes = require('./routes/post');
+
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -14,5 +16,6 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 app.use('/api/auth', userRoutes);
+app.use('/api/posts', postRoutes);
 
 module.exports = app;

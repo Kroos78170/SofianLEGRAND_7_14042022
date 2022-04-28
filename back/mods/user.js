@@ -59,36 +59,6 @@ class User {
             })
         })
     };
-
-    updateUser(sqlInserts) {
-        let sql = 'UPDATE user SET lastName = ?, firstName = ?, email = ? WHERE id = ?';
-        sql = mysql.format(sql, sqlInserts);
-        return new Promise((resolve, reject) => {
-            connectdb.query(sql, function(error, result) {
-                if (error) return reject({ error: 'fonction indisponible' });
-                resolve({ message: 'Informations mises à jour !' });
-            })
-        })
-    };
-
-    deleteUser(sqlInserts) {
-        let sql = 'DELETE FROM user WHERE id = ?';
-        sql = mysql.format(sql, sqlInserts);
-        return new Promise((resolve, reject) => {
-            connectdb.query(sql, function(error, result) {
-                if (error) return reject({ error: 'fonction indisponible' });
-                resolve({ message: 'Utilisateur supprimé' });
-            })
-
-        })
-
-    };
-
-    getUserIdToken(authorizationBearer) {
-        const token = authorizationBearer.split(' ')[1];
-        const decodedToken = jwt.verify(token, process.env.USER_TOKEN);
-        return decodedToken.userId;
-    }
 };
 
 module.exports = User;
