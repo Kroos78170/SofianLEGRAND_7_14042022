@@ -63,10 +63,10 @@ exports.getComments = (req, res, next) => {
         })
 }
 exports.createComment = (req, res, next) => {
+    const userId = tools.getUserIdToken(req.headers.authorization);
     let postId = req.params.id;
-    let userId = req.body.userId;
     let content = req.body.content;
-    let sqlInserts = [userId, postId, content];
+    let sqlInserts = [content, userId, postId];
     post.createComment(sqlInserts)
         .then((response) => {
             res.status(201).json(JSON.stringify(response));
@@ -77,9 +77,8 @@ exports.updateComment = (req, res, next) => {
     const userId = tools.getUserIdToken(req.headers.authorization)
     let content = req.body.content;
     let commentId = req.params.id;
-    let sqlInserts1 = [commentId];
-    let sqlInserts2 = [content, commentId, userId];
-    post.updatePost(sqlInserts1, sqlInserts2)
+    let sqlInserts = [content, commentId, userId];
+    post.updatePost(sqlInserts)
         .then((response) => {
             res.status(201).json(JSON.stringify(response));
         })
@@ -89,19 +88,10 @@ exports.updateComment = (req, res, next) => {
         })
 }
 exports.deleteComment = (req, res, next) => {
-    let commentId = req.params.id;
-    let sqlInserts = [commentId];
-    post.deleteComment(sqlInserts)
-        .then((response) => {
-            res.status(200).json(JSON.stringify(response));
-        })
-}
-exports.deleteComment = (req, res, next) => {
     const userId = tools.getUserIdToken(req.headers.authorization)
     let commentId = req.params.id;
-    let sqlInserts1 = [commentId];
-    let sqlInserts2 = [commentId, userId];
-    post.deletePost(sqlInserts1, sqlInserts2)
+    let sqlInserts = [commentId, userId];
+    post.deletePost(sqlInserts)
         .then((response) => {
             res.status(200).json(JSON.stringify(response));
         })

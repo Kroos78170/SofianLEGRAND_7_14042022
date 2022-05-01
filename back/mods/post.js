@@ -14,7 +14,7 @@ class Post {
         })
     }
     createPost(sqlInserts) {
-        let sql = 'INSERT INTO post (title, content, image, id_author, created_at)  VALUES( ?, ?, ?, ?, NOW())';
+        let sql = 'INSERT INTO post (title, content, image, id_author, created_at)  VALUES ( ?, ?, ?, ?, NOW())';
         sql = mysql.format(sql, sqlInserts);
         console.log(sqlInserts)
         return new Promise((resolve) => {
@@ -67,7 +67,7 @@ class Post {
     // COMMENTS
 
     getComments(sqlInserts) {
-        let sql = "SELECT * FROM comment JOIN user on comments.userId = users.id WHERE postId = ? ORDER BY date";
+        let sql = "SELECT * FROM comment JOIN user on comment.id_author = id_author WHERE id_post = ? ORDER BY comment.created_at";
         sql = mysql.format(sql, sqlInserts);
         return new Promise((resolve) => {
             connectdb.query(sql, function(error, result) {
@@ -78,7 +78,7 @@ class Post {
         })
     }
     createComment(sqlInserts) {
-        let sql = 'INSERT INTO comment VALUES(NULL, ?, ?, ?, NOW())';
+        let sql = 'INSERT INTO comment (content, id_author, id_post, created_at) VALUES(?, ?, ?, NOW())';
         sql = mysql.format(sql, sqlInserts);
         return new Promise((resolve) => {
             connectdb.query(sql, function(error, result) {
@@ -87,15 +87,15 @@ class Post {
             })
         })
     }
-    updateComment(sqlInserts1, sqlInserts2) {
+    updateComment(sqlInserts) {
         let sql1 = 'SELECT * FROM comment where id = ?';
-        sql1 = mysql.format(sql1, sqlInserts1);
+        sql1 = mysql.format(sql1, sqlInserts[1]);
         return new Promise((resolve) => {
             connectdb.query(sql1, function(error, result) {
                 if (error) throw error;
-                if (sqlInserts2[2] == result[0].userId) {
-                    let sql2 = 'UPDATE comment SET comContent = ? WHERE id = ? AND userId = ?';
-                    sql2 = mysql.format(sql2, sqlInserts2);
+                if (sqlInserts[1] == result[0].id_author) {
+                    let sql2 = 'UPDATE comment SET content = ? WHERE id = ? AND id_author = ?';
+                    sql2 = mysql.format(sql2, sqlInserts);
                     connectdb.query(sql2, function(error, result) {
                         if (error) throw error;
                         resolve({ message: 'Commentaire modifié !' });
@@ -106,15 +106,15 @@ class Post {
             })
         });
     }
-    deleteComment(sqlInserts1, sqlInserts2) {
+    deleteComment(sqlInserts) {
         let sql1 = 'SELECT * FROM comment where id = ?';
-        sql1 = mysql.format(sql1, sqlInserts1);
+        sql1 = mysql.format(sql1, sqlInserts[0]);
         return new Promise((resolve, reject) => {
             connectdb.query(sql1, function(error, result) {
                 if (error) throw error;
-                if (sqlInserts2[1] == result[0].userId) {
+                if (sqlInserts[0] == result[0].userId) {
                     let sql2 = 'DELETE FROM comment WHERE id = ? AND userId = ?';
-                    sql2 = mysql.format(sql2, sqlInserts2);
+                    sql2 = mysql.format(sql2, sqlInserts);
                     connectdb.query(sql2, function(error, result) {
                         if (error) throw error;
                         resolve({ message: 'Commentaire supprimé !' });
