@@ -24,15 +24,15 @@ class Post {
             })
         })
     }
-    updatePost(sqlInserts1, sqlInserts2) {
+    updatePost(sqlInserts) {
         let sql1 = 'SELECT * FROM post where id = ?';
-        sql1 = mysql.format(sql1, sqlInserts1);
-        return new Promise((resolve) => {
+        sql1 = mysql.format(sql1, sqlInserts[2]);
+        return new Promise((resolve, reject) => {
             connectdb.query(sql1, function(error, result) {
                 if (error) throw error;
-                if (sqlInserts2[3] == result[0].userId) {
-                    let sql2 = 'UPDATE post SET content = ? WHERE id = ? AND userId = ?';
-                    sql2 = mysql.format(sql2, sqlInserts2);
+                if (sqlInserts[3] == result[0].id_author) {
+                    let sql2 = 'UPDATE post SET title = ?, content = ? WHERE id = ? AND id_author = ?';
+                    sql2 = mysql.format(sql2, sqlInserts);
                     connectdb.query(sql2, function(error, result) {
                         if (error) throw error;
                         resolve({ message: 'Post modifié !' });
@@ -43,15 +43,15 @@ class Post {
             })
         });
     }
-    deletePost(sqlInserts1, sqlInserts2) {
+    deletePost(sqlInserts) {
         let sql1 = 'SELECT * FROM post where id = ?';
-        sql1 = mysql.format(sql1, sqlInserts1);
+        sql1 = mysql.format(sql1, sqlInserts[0]);
         return new Promise((resolve, reject) => {
             connectdb.query(sql1, function(error, result) {
                 if (error) throw error;
-                if (sqlInserts2[1] == result[0].userId) {
-                    let sql2 = 'DELETE FROM post WHERE id = ? AND userId = ?';
-                    sql2 = mysql.format(sql2, sqlInserts2);
+                if (sqlInserts[1] == result[0].id_author) {
+                    let sql2 = 'DELETE FROM post WHERE id = ? AND id_author = ?';
+                    sql2 = mysql.format(sql2, sqlInserts);
                     connectdb.query(sql2, function(error, result) {
                         if (error) throw error;
                         resolve({ message: 'Post supprimé !' });

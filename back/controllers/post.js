@@ -16,7 +16,7 @@ exports.getAllPosts = (req, res, next) => {
 exports.createPost = (req, res, next) => {
     const userId = tools.getUserIdToken(req.headers.authorization);
     //créer l'url de l'image
-    const image = "pipicaca"
+    const image = "URL à créer"
     let { title, content } = req.body;
     let sqlInserts = [title, content, image, userId];
     post.createPost(sqlInserts)
@@ -26,26 +26,22 @@ exports.createPost = (req, res, next) => {
 }
 exports.updatePost = (req, res, next) => {
     const userId = tools.getUserIdToken(req.headers.authorization);
-    let title = req.body.title;
-    let content = req.body.content;
+    let { title, content } = req.body;
     let postId = req.params.id;
-    let sqlInserts1 = [postId];
-    let sqlInserts2 = [title, content, postId, userId];
-    post.updatePost(sqlInserts1, sqlInserts2)
+    let sqlInserts = [title, content, postId, userId];
+    post.updatePost(sqlInserts)
         .then((response) => {
             res.status(201).json(JSON.stringify(response));
         })
         .catch((error) => {
-            console.log(error);
             res.status(400).json(JSON.stringify(error));
         })
 }
 exports.deletePost = (req, res, next) => {
     const userId = tools.getUserIdToken(req.headers.authorization)
     let postId = req.params.id;
-    let sqlInserts1 = [postId];
-    let sqlInserts2 = [postId, userId];
-    post.deletePost(sqlInserts1, sqlInserts2)
+    let sqlInserts = [postId, userId];
+    post.deletePost(sqlInserts)
         .then((response) => {
             res.status(200).json(JSON.stringify(response));
         })
