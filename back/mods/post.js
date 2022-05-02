@@ -12,7 +12,7 @@ class Post {
                 resolve(result)
             });
         })
-    }
+    };
     createPost(sqlInserts) {
         let sql = 'INSERT INTO post (title, content, image, id_author, created_at)  VALUES ( ?, ?, ?, ?, NOW())';
         sql = mysql.format(sql, sqlInserts);
@@ -23,7 +23,7 @@ class Post {
                 resolve({ message: 'Nouveau post !' });
             })
         })
-    }
+    };
     updatePost(sqlInserts) {
         let sql1 = 'SELECT * FROM post where id = ?';
         sql1 = mysql.format(sql1, sqlInserts[2]);
@@ -42,7 +42,7 @@ class Post {
                 }
             })
         });
-    }
+    };
     deletePost(sqlInserts) {
         let sql1 = 'SELECT * FROM post where id = ?';
         sql1 = mysql.format(sql1, sqlInserts[0]);
@@ -62,12 +62,12 @@ class Post {
 
             });
         })
-    }
+    };
 
     // COMMENTS
 
     getComments(sqlInserts) {
-        let sql = "SELECT * FROM comment JOIN user on comment.id_author = id_author WHERE id_post = ? ORDER BY comment.created_at";
+        let sql = "SELECT comment.id, comment.content, DATE_FORMAT(DATE(comment.created_at), '%d/%m/%Y') AS date, TIME(comment.created_at) AS time, user.lastName, user.firstName FROM comment JOIN user ON comment.id_author = user.id WHERE comment.id_post = ? ORDER BY comment.created_at";
         sql = mysql.format(sql, sqlInserts);
         return new Promise((resolve) => {
             connectdb.query(sql, function(error, result) {
@@ -93,7 +93,7 @@ class Post {
         return new Promise((resolve) => {
             connectdb.query(sql1, function(error, result) {
                 if (error) throw error;
-                if (sqlInserts[1] == result[0].id_author) {
+                if (sqlInserts[2] == result[0].id_author) {
                     let sql2 = 'UPDATE comment SET content = ? WHERE id = ? AND id_author = ?';
                     sql2 = mysql.format(sql2, sqlInserts);
                     connectdb.query(sql2, function(error, result) {
@@ -112,8 +112,8 @@ class Post {
         return new Promise((resolve, reject) => {
             connectdb.query(sql1, function(error, result) {
                 if (error) throw error;
-                if (sqlInserts[0] == result[0].userId) {
-                    let sql2 = 'DELETE FROM comment WHERE id = ? AND userId = ?';
+                if (sqlInserts[1] == result[0].id_author) {
+                    let sql2 = 'DELETE FROM comment WHERE id = ? AND id_author = ?';
                     sql2 = mysql.format(sql2, sqlInserts);
                     connectdb.query(sql2, function(error, result) {
                         if (error) throw error;
