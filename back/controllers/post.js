@@ -78,7 +78,7 @@ exports.updateComment = (req, res, next) => {
     let content = req.body.content;
     let commentId = req.params.id;
     let sqlInserts = [content, commentId, userId];
-    post.updatePost(sqlInserts)
+    post.updateComment(sqlInserts)
         .then((response) => {
             res.status(201).json(JSON.stringify(response));
         })
@@ -91,7 +91,7 @@ exports.deleteComment = (req, res, next) => {
     const userId = tools.getUserIdToken(req.headers.authorization)
     let commentId = req.params.id;
     let sqlInserts = [commentId, userId];
-    post.deletePost(sqlInserts)
+    post.deleteComment(sqlInserts)
         .then((response) => {
             res.status(200).json(JSON.stringify(response));
         })
