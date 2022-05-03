@@ -8,6 +8,7 @@ CREATE TABLE user(
     firstname VARCHAR(255) NOT NULL ,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
+    moderation INT DEFAULT 0,
     created_at DATE 
 ) DEFAULT CHARSET UTF8 ;
 
@@ -33,8 +34,8 @@ CREATE TABLE comment(
 ) DEFAULT CHARSET UTF8 ;
 
 insert into user  VALUES
-(null, 'nom', 'prenom', 'ffdzr@fdfdsf', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy",NOW() ) , 
-(null, 'nom2', 'prenom2','ffdzr@fdfdsf2', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy", NOW() ) 
+(null, 'Foiré', 'Roland', 'foire@gmail.com', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy", 1, NOW() ) , 
+(null, 'Padpo', 'Roger','paspo@gmail.com', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy", 0, NOW() ) 
 ;
 insert into post (title, content, image, id_author, created_at) VALUES
 ("titre", "fgdoifdoigj", "iumage.jpg", 2, NOW() ),

@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 exports.getUserIdToken = (authorizationBearer) => {
     const token = authorizationBearer.split(' ')[1];
