@@ -30,18 +30,19 @@ CREATE TABLE comment(
     id_post INT NOT NULL, 
     FOREIGN KEY (id_author) REFERENCES user(id),
     FOREIGN KEY (id_post) REFERENCES post(id),
+    status VARCHAR(15) NOT NULL DEFAULT('En_attente'),
     created_at DATETIME
 ) DEFAULT CHARSET UTF8 ;
 
 insert into user  VALUES
 (NULL, 'Foiré', 'Roland', 'foire@gmail.com', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy", 0, NOW() ) , 
-(NULL, 'Padpo', 'Roger','paspo@gmail.com', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy", 0, NOW() ) ,
+(NULL, 'Padpo', 'Roger','padpo@gmail.com', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy", 0, NOW() ) ,
 (NULL, 'Legrand', 'Sofian', 'legrand@gmail.com', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy", 1, NOW() )
 ;
-insert into post (title, content, image, id_author, created_at) VALUES
-("titre", "fgdoifdoigj", "iumage.jpg", 2, NOW() ),
-("titre2", "fgdoifdoigj", "iumage.jpg", 1, NOW() ),
-("titre3", "fgdoifdoigj", "iumage.jpg", 2 ,NOW() ),
-("titre4", "fgdoifdoigj", "iumage.jpg", 1, NOW() ),
-("titre5", "fgdoifdoigj", "iumage.jpg", 2, NOW() )
+insert into post (title, content, image, id_author, status, created_at) VALUES
+("titre", "fgdoifdoigj", "iumage.jpg", 2, "En_attente", NOW() ),
+("titre2", "fgdoifdoigj", "iumage.jpg", 1, "En_attente", NOW() ),
+("titre3", "fgdoifdoigj", "iumage.jpg", 2 , "En_attente", NOW() ),
+("titre4", "fgdoifdoigj", "iumage.jpg", 1, "En_attente", NOW() ),
+("titre5", "fgdoifdoigj", "iumage.jpg", 2, "En_attente", NOW() )
 ;

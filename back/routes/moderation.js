@@ -8,8 +8,8 @@ const moderationCtrl = require('../controllers/moderation');
 try {
     router.get('/comments', auth, moderationCtrl.getAllComments);
     router.get('/posts', auth, moderationCtrl.getAllPosts);
-    router.delete('/comment/:id', auth, moderationCtrl.deleteComment);
-    router.delete('/post/:id', auth, moderationCtrl.deletePost);
+    router.patch('/comments/:id', auth, moderationCtrl.modComment);
+    router.patch('posts/:id', auth, moderationCtrl.modPost);
 } catch (error) {
     console.log(error);
 }
