@@ -1,6 +1,6 @@
 export function useApiService() {
 
-    async function login(error, errorMessage) {
+    async function login(email, password) {
         const myHeaders = new Headers();
 
         myHeaders.append("Content-Type", "application/json");

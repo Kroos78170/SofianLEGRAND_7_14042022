@@ -1,5 +1,6 @@
 const tokenKey = 'token'
 const userKey = 'user'
+
 export function useLocalStorageService() {
 
     function setItems(token, user) {

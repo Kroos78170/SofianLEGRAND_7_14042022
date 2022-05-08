@@ -22,24 +22,27 @@
 
 <script setup>
 import {ref, computed} from 'vue'
-import {useApiService} from '../composable/apiService'
+// import {useApiService} from '../composable/apiService'
 import {useRouter} from 'vue-router'
-import {useLocalStorageService} from '../composable/localStorageService'
 
-const apiService = useApiService()
+import {useUserStore} from '@/stores/user'
+
+// const apiService = useApiService()
 const router = useRouter()
-const localStorageService = useLocalStorageService()
+
  const email = ref('')
  const password = ref('')
  let error = ref(false)
  let errorMessage = ref('')
+ const userStore = useUserStore()
 
  const disabled = computed(() => ({
   disabled: email.value == '' ||  password.value == ''
 }))
 
 async function login(){
-    const data = await apiService.login(error, errorMessage)
+    // const data = await apiService.login(email, password)
+    const data = await userStore.login(email, password)
     console.log(data)
      if (data.error) {
             error.value = true
@@ -48,7 +51,7 @@ async function login(){
         } else {
             error.value = false
             errorMessage.value = ''
-           localStorageService.setItems(JSON.parse(data).token, JSON.parse(data).user);
+           
             router.push('/posts')
         }    
 }
