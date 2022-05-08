@@ -16,7 +16,7 @@ exports.signup = (req, res, next) => {
             let sqlInserts = [lastName, firstName, email, hash];
             user.signup(sqlInserts)
                 .then((response) => {
-                    res.status(201).json(JSON.stringify(response))
+                    res.status(201).json(response)
                 })
                 .catch((error) => {
                     console.error(error);
@@ -32,7 +32,7 @@ exports.login = (req, res, next) => {
     let sqlInserts = [email];
     user.login(sqlInserts, password)
         .then((response) => {
-            res.status(200).json(JSON.stringify(response))
+            res.status(200).json(response)
         })
         .catch((error) => {
             res.status(400).json(error)
@@ -44,7 +44,7 @@ exports.seeMyProfile = (req, res, next) => {
     let sqlInserts = [userId];
     user.seeMyProfile(sqlInserts)
         .then((response) => {
-            res.status(200).json(JSON.stringify(response))
+            res.status(200).json(response)
         })
         .catch((error) => {
             console.log(error);

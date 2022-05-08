@@ -22,12 +22,11 @@
 
 <script setup>
 import {ref, computed} from 'vue'
-// import {useApiService} from '../composable/apiService'
+
 import {useRouter} from 'vue-router'
 
 import {useUserStore} from '@/stores/user'
 
-// const apiService = useApiService()
 const router = useRouter()
 
  const email = ref('')
@@ -41,13 +40,11 @@ const router = useRouter()
 }))
 
 async function login(){
-    // const data = await apiService.login(email, password)
     const data = await userStore.login(email, password)
     console.log(data)
      if (data.error) {
             error.value = true
-            errorMessage.value = data.error
-            
+            errorMessage.value = data.error    
         } else {
             error.value = false
             errorMessage.value = ''

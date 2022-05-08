@@ -31,7 +31,7 @@ class User {
                     bcrypt.compare(password, result[0].password)
                         .then(valid => {
                             if (!valid) return reject({ error: 'Mot de passe incorrect !' });
-                            resolve({
+                            return resolve({
                                 user: {
                                     userId: result[0].id,
                                     fullName: result[0].firstname + ' ' + result[0].lastname,

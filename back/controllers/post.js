@@ -10,7 +10,7 @@ let post = new Post();
 exports.getAllPosts = (req, res, next) => {
     post.getAllPosts()
         .then((response) => {
-            res.status(200).json(JSON.stringify(response));
+            res.status(200).json(response);
         });
 }
 exports.createPost = (req, res, next) => {
@@ -21,7 +21,7 @@ exports.createPost = (req, res, next) => {
     let sqlInserts = [title, content, image, userId];
     post.createPost(sqlInserts)
         .then((response) => {
-            res.status(201).json(JSON.stringify(response));
+            res.status(201).json(response);
         })
 }
 exports.updatePost = (req, res, next) => {
@@ -31,10 +31,10 @@ exports.updatePost = (req, res, next) => {
     let sqlInserts = [title, content, postId, userId];
     post.updatePost(sqlInserts)
         .then((response) => {
-            res.status(201).json(JSON.stringify(response));
+            res.status(201).json(response);
         })
         .catch((error) => {
-            res.status(400).json(JSON.stringify(error));
+            res.status(400).json(error);
         })
 }
 exports.deletePost = (req, res, next) => {
@@ -43,11 +43,11 @@ exports.deletePost = (req, res, next) => {
     let sqlInserts = [postId, userId];
     post.deletePost(sqlInserts)
         .then((response) => {
-            res.status(200).json(JSON.stringify(response));
+            res.status(200).json(response);
         })
         .catch((error) => {
             console.log(error);
-            res.status(400).json(JSON.stringify(error));
+            res.status(400).json(error);
         })
 }
 
@@ -59,7 +59,7 @@ exports.getComments = (req, res, next) => {
     let sqlInserts = [postId];
     post.getComments(sqlInserts)
         .then((response) => {
-            res.status(200).json(JSON.stringify(response));
+            res.status(200).json(response);
         })
 }
 exports.createComment = (req, res, next) => {
@@ -69,7 +69,7 @@ exports.createComment = (req, res, next) => {
     let sqlInserts = [content, userId, postId];
     post.createComment(sqlInserts)
         .then((response) => {
-            res.status(201).json(JSON.stringify(response));
+            res.status(201).json(response);
         })
 }
 
@@ -80,11 +80,11 @@ exports.updateComment = (req, res, next) => {
     let sqlInserts = [content, commentId, userId];
     post.updateComment(sqlInserts)
         .then((response) => {
-            res.status(201).json(JSON.stringify(response));
+            res.status(201).json(response);
         })
         .catch((error) => {
             console.log(error);
-            res.status(400).json(JSON.stringify(error));
+            res.status(400).json(error);
         })
 }
 exports.deleteComment = (req, res, next) => {
@@ -93,10 +93,10 @@ exports.deleteComment = (req, res, next) => {
     let sqlInserts = [commentId, userId];
     post.deleteComment(sqlInserts)
         .then((response) => {
-            res.status(200).json(JSON.stringify(response));
+            res.status(200).json(response);
         })
         .catch((error) => {
             console.log(error);
-            res.status(400).json(JSON.stringify(error));
+            res.status(400).json(error);
         })
 }

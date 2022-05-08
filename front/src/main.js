@@ -14,12 +14,7 @@ router.beforeEach(async(to, from) => {
     const userStore = useUserStore()
     const isAuthenticated = userStore.isAuthenticated
     userStore.verifyConnectedUser()
-    if (
-        // make sure the user is authenticated
-        !isAuthenticated &&
-        // ❗️ Avoid an infinite redirect
-        to.name !== 'login'
-    ) {
+    if (!isAuthenticated && (to.name == 'posts')) {
         // redirect the user to the login page
         return { name: 'login' }
     } else if (isAuthenticated && (to.name == 'register' || to.name == 'login')) {

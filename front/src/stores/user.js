@@ -23,11 +23,10 @@ export const useUserStore = defineStore('user', {
         },
         async login(email, password) {
             const data = await apiService.login(email, password)
-            const dataDecoded = JSON.parse(data)
-            if (!dataDecoded.error) {
-                console.log(dataDecoded)
-                this.userData = dataDecoded.user
-                localStorageService.setItems(dataDecoded.token, dataDecoded.user);
+            console.log(data)
+            if (!data.error) {
+                this.userData = data.user
+                localStorageService.setItems(data.token, data.user);
             }
             return data
         },

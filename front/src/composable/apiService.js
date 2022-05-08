@@ -9,7 +9,6 @@ export function useApiService() {
             headers: myHeaders,
             body: JSON.stringify({ email: email.value, password: password.value })
         }).then(res => res.json())
-        console.log(data)
         return data
     }
 
