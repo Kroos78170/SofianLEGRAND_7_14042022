@@ -32,14 +32,20 @@ class User {
                         .then(valid => {
                             if (!valid) return reject({ error: 'Mot de passe incorrect !' });
                             resolve({
-                                userId: result[0].id,
+                                user: {
+                                    userId: result[0].id,
+                                    fullName: result[0].firstname + ' ' + result[0].lastname,
+                                    moderation: result[0].moderation
+                                },
+
                                 token: jwt.sign({
                                         userId: result[0].id,
-                                        moderation: result[0].moderation
+                                        moderation: result[0].moderation,
+
                                     },
                                     process.env.USER_TOKEN, { expiresIn: '24h' }
-                                ),
-                                moderation: result[0].moderation
+                                )
+
                             });
                         })
                         .catch(error => reject({ error }));

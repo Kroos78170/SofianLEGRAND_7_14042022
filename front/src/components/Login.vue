@@ -13,7 +13,6 @@
                 <input type="password" class="form-control" id="password" v-model="password">
             </div>
             <div class="mb-3">
-            
                 <button type="submit" class="btn btn-success" :class="disabled">Valider</button>
             </div>
 
@@ -23,45 +22,35 @@
 
 <script setup>
 import {ref, computed} from 'vue'
+import {useApiService} from '../composable/apiService'
+import {useRouter} from 'vue-router'
+import {useLocalStorageService} from '../composable/localStorageService'
+
+const apiService = useApiService()
+const router = useRouter()
+const localStorageService = useLocalStorageService()
  const email = ref('')
  const password = ref('')
  let error = ref(false)
  let errorMessage = ref('')
 
-
- console.log(email.value)
-
  const disabled = computed(() => ({
   disabled: email.value == '' ||  password.value == ''
 }))
 
-function login(){
-    //vérifier les infos du formulaire
-    console.log("login")
-    const myHeaders = new Headers();
- 
-    myHeaders.append("Content-Type", "application/json");
-    fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: myHeaders,
-        body: JSON.stringify({email: email.value, password: password.value})
-    }).then(res => res.json())
-    .then(data => {
-        console.log(data)
-        if(data.error){
+async function login(){
+    const data = await apiService.login(error, errorMessage)
+    console.log(data)
+     if (data.error) {
             error.value = true
-            errorMessage.value = data.error   
-        }else{
+            errorMessage.value = data.error
+            
+        } else {
             error.value = false
-            errorMessage.value = ''  
-        }
-    }   
-    )
+            errorMessage.value = ''
+           localStorageService.setItems(JSON.parse(data).token, JSON.parse(data).user);
+            router.push('/posts')
+        }    
 }
- //au click suyr le bouton valider
-
-// on envoi les infos au backend
-// reception de la reponse du backend
-
 
 </script>
