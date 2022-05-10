@@ -23,7 +23,14 @@ export const useUserStore = defineStore('user', {
         },
         async login(email, password) {
             const data = await apiService.login(email, password)
-            console.log(data)
+            if (!data.error) {
+                this.userData = data.user
+                localStorageService.setItems(data.token, data.user);
+            }
+            return data
+        },
+        async register(lastName, firstName, email, password) {
+            const data = await apiService.register(lastName, firstName, email, password)
             if (!data.error) {
                 this.userData = data.user
                 localStorageService.setItems(data.token, data.user);

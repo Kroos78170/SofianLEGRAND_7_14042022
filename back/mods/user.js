@@ -8,10 +8,11 @@ require('dotenv').config()
 
 class User {
     signup(sqlInserts) {
-        let sql = 'INSERT INTO user VALUES(NULL, ?, ?, ?, ?, NOW())';
+        let sql = 'INSERT INTO user VALUES(NULL, ?, ?, ?, ?, 0, NOW())';
         sql = mysql.format(sql, sqlInserts);
         return new Promise((resolve, reject) => {
             connectdb.query(sql, function(error, result) {
+                console.log(error)
                 if (error) reject({ error: 'Erreur dans l\'inscription' });
                 resolve({ message: 'Nouvel utilisateur !' })
             })

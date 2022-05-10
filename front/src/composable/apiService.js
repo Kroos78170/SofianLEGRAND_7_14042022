@@ -11,9 +11,20 @@ export function useApiService() {
         }).then(res => res.json())
         return data
     }
+    async function register(lastName, firstName, email, password) {
+        const myHeaders = new Headers();
 
-    return {
-        login
+        myHeaders.append("Content-Type", "application/json");
+        const data = await fetch("http://localhost:3000/api/auth/signup", {
+            method: "POST",
+            headers: myHeaders,
+            body: JSON.stringify({ lastName: lastName.value, firstName: firstName.value, email: email.value, password: password.value })
+        }).then(res => res.json())
+        return data
     }
 
+    return {
+        login,
+        register
+    }
 }
