@@ -21,36 +21,36 @@
 </template>
 
 <script setup>
-import {ref, computed} from 'vue'
+    import {ref, computed} from 'vue'
 
-import {useRouter} from 'vue-router'
+    import {useRouter} from 'vue-router'
 
-import {useUserStore} from '@/stores/user'
+    import {useUserStore} from '@/stores/user'
 
-const router = useRouter()
+    const router = useRouter()
 
- const email = ref('')
- const password = ref('')
- let error = ref(false)
- let errorMessage = ref('')
- const userStore = useUserStore()
+    const email = ref('')
+    const password = ref('')
+    let error = ref(false)
+    let errorMessage = ref('')
+    const userStore = useUserStore()
 
- const disabled = computed(() => ({
-  disabled: email.value == '' ||  password.value == ''
-}))
+    const disabled = computed(() => ({
+        disabled: email.value == '' ||  password.value == ''
+    }))
 
-async function login(){
-    const data = await userStore.login(email, password)
-    console.log(data)
-     if (data.error) {
-            error.value = true
-            errorMessage.value = data.error    
-        } else {
-            error.value = false
-            errorMessage.value = ''
-           
-            router.push('/posts')
-        }    
-}
+    async function login(){
+        const data = await userStore.login(email, password)
+        console.log(data)
+        if (data.error) {
+                error.value = true
+                errorMessage.value = data.error    
+            } else {
+                error.value = false
+                errorMessage.value = ''
+            
+                router.push('/posts')
+            }    
+    }
 
 </script>

@@ -18,17 +18,19 @@ import { RouterLink, RouterView } from 'vue-router'
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <RouterLink to="/login" class="nav-link active">Login</RouterLink>
-        </li>
-        <li class="nav-item">
-          <RouterLink to="/register" class="nav-link active">Register</RouterLink>
+          <RouterLink to="/about" class="nav-link">About</RouterLink>
         </li>
         <li class="nav-item">
           <RouterLink to="/posts" class="nav-link active">Posts</RouterLink>
         </li>
         <li class="nav-item">
-    
-          <RouterLink to="/about" class="nav-link">About</RouterLink>
+          <RouterLink to="/register" class="nav-link active">Register</RouterLink>
+        </li>
+        <li class="nav-item">
+          <RouterLink to="/login" class="nav-link active">Login</RouterLink>
+        </li>
+        <li class="nav-item">
+          <RouterLink to="/login" class="nav-link active">Disconnect</RouterLink>
         </li>
        
       </ul>
