@@ -1,5 +1,14 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+
+import { useLocalStorageService } from './composable/localStorageService';
+
+const localStorageService = useLocalStorageService();
+
+function disconnect(){
+  localStorageService.removeUser();
+  window.location.reload()
+}
 </script>
 
 <template>
@@ -30,7 +39,7 @@ import { RouterLink, RouterView } from 'vue-router'
           <RouterLink to="/login" class="nav-link active">Login</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/login" class="nav-link active">Disconnect</RouterLink>
+          <RouterLink to="/login" class="nav-link active" @click="disconnect">Disconnect</RouterLink>
         </li>
        
       </ul>

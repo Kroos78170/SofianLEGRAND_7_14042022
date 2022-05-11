@@ -33,7 +33,7 @@ export const useUserStore = defineStore('user', {
             const data = await apiService.register(lastName, firstName, email, password)
             if (!data.error) {
                 this.userData = data.user
-                localStorageService.setItems(data.token, data.user);
+                console.log(data);
             }
             return data
         },

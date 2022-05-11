@@ -15,9 +15,15 @@ export function useLocalStorageService() {
 
     }
 
+    function removeUser() {
+        localStorage.removeItem(tokenKey);
+        localStorage.removeItem(userKey)
+    }
+
     return {
         setItems,
-        getUser
+        getUser,
+        removeUser
     }
 
 }
