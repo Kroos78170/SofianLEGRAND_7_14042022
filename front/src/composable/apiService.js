@@ -1,3 +1,7 @@
+import { useLocalStorageService } from "./localStorageService";
+
+const localStorageService = useLocalStorageService()
+
 export function useApiService() {
 
     async function login(email, password) {
@@ -23,8 +27,19 @@ export function useApiService() {
         return data
     }
 
+    async function getPosts() {
+        const token = localStorageService.getToken();
+        const data = await fetch("http://localhost:3000/api/posts", {
+            method: "GET",
+            headers: { Authentication: `Bearer ${token}` }
+        }).then(res => res.json())
+        console.log(data)
+
+    }
+
     return {
         login,
-        register
+        register,
+        getPosts
     }
 }

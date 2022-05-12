@@ -22,6 +22,11 @@ const router = createRouter({
             component: PostsView
         },
         {
+            path: '/post/:id',
+            name: 'post',
+            component: PostsView
+        },
+        {
             path: '/about',
             name: 'about',
             // route level code-splitting

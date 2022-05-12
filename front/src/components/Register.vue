@@ -57,7 +57,9 @@
                 error.value = false
                 errorMessage.value = ''
             
-                router.push('/posts')
+                router.push({
+                    "name": "login"
+                })
             }    
     }
 

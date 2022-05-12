@@ -1,13 +1,16 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 
-import { useLocalStorageService } from './composable/localStorageService';
+import {useRouter} from 'vue-router'
+import { useUserStore } from './stores/user'
 
-const localStorageService = useLocalStorageService();
+
+const router = useRouter()
+const userStore = useUserStore()
 
 function disconnect(){
-  localStorageService.removeUser();
-  window.location.reload()
+  userStore.disconnect();
+  router.push('/login')
 }
 </script>
 
@@ -30,16 +33,16 @@ function disconnect(){
           <RouterLink to="/about" class="nav-link">About</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/posts" class="nav-link active">Posts</RouterLink>
+          <RouterLink to="/posts" v-if="userStore.isAuthenticated" class="nav-link active">Posts</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/register" class="nav-link active">Register</RouterLink>
+          <RouterLink to="/register" v-if="!userStore.isAuthenticated" class="nav-link active">Register</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/login" class="nav-link active">Login</RouterLink>
+          <RouterLink to="/login" v-if="!userStore.isAuthenticated" class="nav-link active">Login</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/login" class="nav-link active" @click="disconnect">Disconnect</RouterLink>
+          <RouterLink to="/login" v-if="userStore.isAuthenticated" class="nav-link active" @click="disconnect">Disconnect</RouterLink>
         </li>
        
       </ul>
