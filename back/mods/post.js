@@ -13,6 +13,16 @@ class Post {
             });
         })
     };
+    getOnePost(sqlInserts) {
+        let sql = "SELECT * FROM post WHERE id = ?";
+        sql = mysql.format(sql, sqlInserts[0])
+        return new Promise((resolve) => {
+            connectdb.query(sql, function(error, result) {
+                if (error) throw error;
+                resolve(result)
+            });
+        })
+    };
     createPost(sqlInserts) {
         let sql = 'INSERT INTO post (title, content, image, id_author, created_at)  VALUES ( ?, ?, ?, ?, NOW())';
         sql = mysql.format(sql, sqlInserts);
@@ -25,7 +35,7 @@ class Post {
         })
     };
     updatePost(sqlInserts) {
-        let sql1 = 'SELECT * FROM post where id = ?';
+        let sql1 = 'SELECT * FROM post WHERE id = ?';
         sql1 = mysql.format(sql1, sqlInserts[2]);
         return new Promise((resolve, reject) => {
             connectdb.query(sql1, function(error, result) {

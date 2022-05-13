@@ -13,6 +13,17 @@ exports.getAllPosts = (req, res, next) => {
             res.status(200).json(response);
         });
 }
+exports.getOnePost = (req, res, next) => {
+    let postId = req.params.id;
+    let sqlInserts = [postId];
+    post.getOnePost(sqlInserts)
+        .then((response) => {
+            res.status(200).json(response);
+        })
+        .catch((error) => {
+            res.status(400).json(error);
+        });
+}
 exports.createPost = (req, res, next) => {
     const userId = tools.getUserIdToken(req.headers.authorization);
     //créer l'url de l'image
