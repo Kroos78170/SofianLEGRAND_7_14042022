@@ -14,7 +14,7 @@ class Post {
         })
     };
     getOnePost(sqlInserts) {
-        let sql = "SELECT post.title, post.content, DATE_FORMAT(DATE(post.created_at), '%d/%m/%Y') AS date, TIME(post.created_at) AS time FROM post WHERE id = ?";
+        let sql = "SELECT post.id, post.title, post.content, DATE_FORMAT(DATE(post.created_at), '%d/%m/%Y') AS date, TIME(post.created_at) AS time FROM post WHERE id = ?";
         sql = mysql.format(sql, sqlInserts[0])
         return new Promise((resolve) => {
             connectdb.query(sql, function(error, result) {
