@@ -1,5 +1,4 @@
 <template>
-
     <h1>Login</h1>
     <section class="d-flex container justify-content-center align-items-center ">
        <form @submit.prevent="login" class="bg-light p-5 container justify-content-center align-items-center">
@@ -41,7 +40,6 @@
 
     async function login(){
         const data = await userStore.login(email, password)
-        console.log(data)
         if (data.error) {
                 error.value = true
                 errorMessage.value = data.error    

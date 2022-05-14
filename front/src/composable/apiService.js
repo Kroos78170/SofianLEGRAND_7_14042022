@@ -31,10 +31,9 @@ export function useApiService() {
         const token = localStorageService.getToken();
         const data = await fetch("http://localhost:3000/api/posts", {
             method: "GET",
-            headers: { Authentication: `Bearer ${token}` }
+            headers: { Authorization: `Bearer ${token}` }
         }).then(res => res.json())
-        console.log(data)
-
+        return data
     }
 
     return {

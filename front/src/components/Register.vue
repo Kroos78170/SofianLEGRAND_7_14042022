@@ -1,5 +1,4 @@
 <template>
-
     <h1>Register</h1>
     <section class="d-flex container  flex-wrap">
        <form @submit.prevent="register" class="bg-light p-5 container justify-content-center align-items-center">

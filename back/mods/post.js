@@ -5,7 +5,7 @@ class Post {
     //POSTS
 
     getAllPosts() {
-        let sql = "SELECT post.id, post.title, post.content, DATE_FORMAT(DATE(post.created_at), '%d/%m/%Y') AS date, TIME(post.created_at) AS time, user.lastName, user.firstName FROM post JOIN user ON post.id_author = user.id AND post.status= 'valide' ORDER BY post.created_at DESC";
+        let sql = "SELECT post.id, post.title, post.content, DATE_FORMAT(DATE(post.created_at), '%d/%m/%Y') AS date, TIME(post.created_at) AS time, user.lastName, user.firstName FROM post JOIN user ON post.id_author = user.id AND post.status= 'Valide' ORDER BY post.created_at DESC";
         return new Promise((resolve) => {
             connectdb.query(sql, function(error, result) {
                 if (error) throw error;

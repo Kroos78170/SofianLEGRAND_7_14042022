@@ -40,9 +40,9 @@ insert into user  VALUES
 (NULL, 'Legrand', 'Sofian', 'legrand@gmail.com', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy", 1, NOW() )
 ;
 insert into post (title, content, image, id_author, status, created_at) VALUES
-("titre", "fgdoifdoigj", "iumage.jpg", 2, "En_attente", NOW() ),
+("titre", "fgdoifdoigj", "iumage.jpg", 2, "Valide", NOW() ),
 ("titre2", "fgdoifdoigj", "iumage.jpg", 1, "En_attente", NOW() ),
-("titre3", "fgdoifdoigj", "iumage.jpg", 2 , "En_attente", NOW() ),
+("titre3", "fgdoifdoigj", "iumage.jpg", 2 , "Valide", NOW() ),
 ("titre4", "fgdoifdoigj", "iumage.jpg", 1, "En_attente", NOW() ),
-("titre5", "fgdoifdoigj", "iumage.jpg", 2, "En_attente", NOW() )
+("titre5", "fgdoifdoigj", "iumage.jpg", 2, "Valide", NOW() )
 ;

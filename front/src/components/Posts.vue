@@ -1,15 +1,21 @@
 <template>
-
     <h1>Posts</h1>
+    <div class="text-center" v-if="isLoading">
+    <div class="spinner-border text-secondary " role="status">
+            <span class="sr-only"></span>
+        </div>
+    </div>
     <section class="d-flex container  flex-wrap">
+        
         <div class="card m-2 " style="width: 30%;" v-for="post in posts" :key="post.id" >
-            <img src="" class="card-img-top" alt="...">
+            <img src="{{post.urlImage}}" class="card-img-top" alt="...">
             <div  class="card-body">
                 <h5 class="card-title">{{post.title}}</h5>
                 <p class="card-text">{{post.content}}</p>
                 <a href="/post/:id" class="btn btn-primary">Go somewhere</a>
             </div>
         </div>
+        <p v-if="posts.length == 0">Pas de post pour le moment</p>
     </section>
 </template>
 
@@ -19,64 +25,16 @@ import {ref, onMounted} from 'vue'
 import { useApiService } from '../composable/apiService'
 
 const apiService = useApiService()
+let isLoading = ref(true)
 
- const posts= ref([
-     {
-         id: 1,
-         title: 'titre1',
-         content: "confojfosdjfosdjfs",
-         date: '12/10/2022',
-         time: '12:00',
-         firstname: 'sofian',
-         lastname: 'Legrand',
-         urlImage: 'htttp://localhost:3000/images.images.png'
-     },
-     {
-         id: 2,
-         title: 'titre1',
-         content: "confojfosdjfosdjfs",
-         date: '12/10/2022',
-         time: '12:00',
-         firstname: 'sofian',
-         lastname: 'Legrand',
-         urlImage: 'htttp://localhost:3000/images.images.png'
-     },
-     {
-         id: 3,
-         title: 'titre1',
-         content: "confojfosdjfosdjfs",
-         date: '12/10/2022',
-         time: '12:00',
-         firstname: 'sofian',
-         lastname: 'Legrand',
-         urlImage: 'htttp://localhost:3000/images.images.png'
-     },
-     {
-         id: 4,
-         title: 'titre1',
-         content: "confojfosdjfosdjfs",
-         date: '12/10/2022',
-         time: '12:00',
-         firstname: 'sofian',
-         lastname: 'Legrand',
-         urlImage: 'htttp://localhost:3000/images.images.png'
-     },
-     {
-         id: 5,
-         title: 'titre1',
-         content: "confojfosdjfosdjfs",
-         date: '12/10/2022',
-         time: '12:00',
-         firstname: 'sofian',
-         lastname: 'Legrand',
-         urlImage: 'htttp://localhost:3000/images.images.png'
-     }
- ])
+ const posts = ref([])
 
 
 
-onMounted(() => {
-  apiService.getPosts()
+onMounted(async () => {
+    posts.value = await apiService.getPosts()
+    isLoading.value = false
+ 
 })
 
 
