@@ -40,9 +40,15 @@ insert into user  VALUES
 (NULL, 'Legrand', 'Sofian', 'legrand@gmail.com', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy", 1, NOW() )
 ;
 insert into post (title, content, image, id_author, status, created_at) VALUES
-("titre", "fgdoifdoigj", "iumage.jpg", 2, "Valide", NOW() ),
-("titre2", "fgdoifdoigj", "iumage.jpg", 1, "En_attente", NOW() ),
-("titre3", "fgdoifdoigj", "iumage.jpg", 2 , "Valide", NOW() ),
-("titre4", "fgdoifdoigj", "iumage.jpg", 1, "En_attente", NOW() ),
-("titre5", "fgdoifdoigj", "iumage.jpg", 2, "Valide", NOW() )
+("titre", "fgdoifdoigj", "http://localhost:3000/images/DIDI.jpg", 2, "Valide", NOW() ),
+("titre2", "fgdoifdoigj", "http://localhost:3000/images/DIDI.jpg", 1, "En_attente", NOW() ),
+("titre3", "fgdoifdoigj", "http://localhost:3000/images/DIDI.jpg", 2 , "Valide", NOW() ),
+("titre4", "fgdoifdoigj", "http://localhost:3000/images/DIDI.jpg", 1, "En_attente", NOW() ),
+("titre5", "fgdoifdoigj", "http://localhost:3000/images/DIDI.jpg", 2, "Valide", NOW() )
 ;
+
+insert into comment (content, id_author, id_post, status, created_at) VALUES
+("Contenu", 1, 1, "Valide", NOW()),
+("Contenu1", 1, 1, "Valide", NOW()),
+("Contenu2", 1, 1, "Valide", NOW()),
+("Contenu3", 1, 1, "Valide", NOW())

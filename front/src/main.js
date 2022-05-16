@@ -16,9 +16,9 @@ router.beforeEach(async(to, from) => {
     userStore.verifyConnectedUser()
     if (!isAuthenticated && (to.name == 'posts') || (to.name == 'post') || (to.name == 'moderation')) {
         // redirect the user to the login page
-        return { name: 'login' }
+        // return { name: 'login' }
     } else if (isAuthenticated && (to.name == 'register' || to.name == 'login')) {
-        return { name: 'posts' }
+        // return { name: 'posts' }
     }
 })
 
