@@ -27,7 +27,10 @@ exports.getOnePost = (req, res, next) => {
 exports.createPost = (req, res, next) => {
     const userId = tools.getUserIdToken(req.headers.authorization);
     //créer l'url de l'image
-    const image = "URL à créer"
+    const image = new Image({
+        ...imageObject,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    });
     let { title, content } = req.body;
     let sqlInserts = [title, content, image, userId];
     post.createPost(sqlInserts)

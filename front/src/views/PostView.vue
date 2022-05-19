@@ -2,57 +2,41 @@
   <main>
        <h1>Post</h1>
     <section>
-      {{route.params.id}}
-        <h4>{{post.lastName}} {{post.firstName}}</h4>
+        <h4>{{post.firstname}} {{post.lastname}}</h4>
         <h2>{{ post.title }}</h2>
         <p>{{ post.content }}</p>
+        <p>Posté le {{post.date}} à {{post.time}}</p>
     </section>
     <section>
-        <h4>{{comment.lastName}} {{comment.firstName}}</h4>
-        <p>{{comment.content}}</p>
-        <p>{{comment.date}} à {{comment.time}}</p>
+      <div v-for="comment in comments" class="card m-2" style="width: 70%" :key="comment.id" >
+        <div class="card-body">
+          <h4 class="card-title">{{comment.firstname}}{{comment.lastname}}</h4> 
+          <p class="card-text">{{comment.content}}</p>
+          <p>Posté le {{comment.date}} à {{comment.time}}</p>
+        </div>
+      </div>
     </section>
   </main>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRoute } from 'vue-router'; 
+import { comment } from 'postcss';
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+ import { useApiService } from '../composable/apiService'
 
-const post = ref({id: 1, title: 'titre', content: 'contenudidisj', lastName: 'Foiré',  firstName: 'Roland'})
-const comment = ref([
-  {
-    id: 1,
-    content: 'sdfgfdh',
-    date: '27/06/1991',
-    time: '23h15',
-    lastName: 'Foiré',
-    firstName: 'Roland'
-  },
-   {
-    id: 2,
-    content: 'sdfgfdh',
-    date: '27/06/1991',
-    time: '23h15',
-    lastName: 'Foiré',
-    firstName: 'Roland'
-  }, {
-    id: 3,
-    content: 'sdfgfdh',
-    date: '27/06/1991',
-    time: '23h15',
-    lastName: 'Foiré',
-    firstName: 'Roland'
-  }, {
-    id: 4,
-    content: 'sdfgfdh',
-    date: '27/06/1991',
-    time: '23h15',
-    lastName: 'Foiré',
-    firstName: 'Roland'
-  },
-])
+ const apiService = useApiService()
+
+const post = ref([]);
+const comments = ref([])
 const route = useRoute();
 
+onMounted(async () => {
+  const id = route.params.id
+  //tu dois récuperer l'id dans les parametre d'url
+        post.value = await apiService.getOnePost(id)
+        comment.value = await apiService.getComments(id)
+    })
+        
 
 </script>

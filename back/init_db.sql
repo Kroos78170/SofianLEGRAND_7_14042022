@@ -52,3 +52,4 @@ insert into comment (content, id_author, id_post, status, created_at) VALUES
 ("Contenu1", 1, 1, "Valide", NOW()),
 ("Contenu2", 1, 1, "Valide", NOW()),
 ("Contenu3", 1, 1, "Valide", NOW())
+
