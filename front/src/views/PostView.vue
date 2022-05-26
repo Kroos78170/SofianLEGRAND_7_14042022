@@ -1,5 +1,4 @@
 <template>
-  <main>
        <h1>Post</h1>
     <section>
         <h4>{{post.firstname}} {{post.lastname}}</h4>
@@ -10,7 +9,6 @@
     <section>
       <CommentCard v-for="comment in comments" :key="comment.id" :comment="comment"/>
     </section>
-  </main>
 </template>
 
 <script setup>

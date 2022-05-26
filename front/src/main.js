@@ -14,11 +14,14 @@ router.beforeEach(async(to, from) => {
     const userStore = useUserStore()
     const isAuthenticated = userStore.isAuthenticated
     userStore.verifyConnectedUser()
-    if (!isAuthenticated && (to.name == 'posts') || (to.name == 'post') || (to.name == 'moderation')) {
+    if (to.meta.requiresAuth == true && !isAuthenticated) {
         // redirect the user to the login page
-        // return { name: 'login' }
+        return {
+            name: 'login',
+            query: { redirect: to.fullPath }
+        }
     } else if (isAuthenticated && (to.name == 'register' || to.name == 'login')) {
-        // return { name: 'posts' }
+        return { name: 'posts' }
     }
 })
 

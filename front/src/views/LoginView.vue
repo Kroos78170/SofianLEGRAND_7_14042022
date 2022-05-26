@@ -1,5 +1,4 @@
 <template>
-  <main>
     <h1>Login</h1>
     <section class="d-flex container justify-content-center align-items-center ">
        <form @submit.prevent="login" class="bg-light p-5 container justify-content-center align-items-center">
@@ -18,7 +17,6 @@
 
        </form>
        </section>
-  </main>
 </template>
 
 <script setup>

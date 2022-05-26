@@ -1,8 +1,8 @@
 <template>
     <div class="card m-2" style="width:30%"  >
-            <img :src="post.image" class="card-img-top" alt="...">
             <div  class="card-body">
                 <h5 class="card-title">{{post.title}}</h5>
+                <img :src="post.image" class="card-img-top" alt="...">
                 <p class="card-text">{{post.content}}</p>
                 <RouterLink :to="{ name: 'post', params: { id: post.id} }" class="btn btn-primary">Lire</RouterLink>
             </div>
@@ -20,3 +20,8 @@ const props = defineProps({
 })
 
 </script>
+<style scoped>
+.card-body img{
+    max-width: 200px;
+}
+</style>

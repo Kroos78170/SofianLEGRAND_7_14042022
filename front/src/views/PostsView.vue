@@ -1,5 +1,4 @@
 <template>
-  <main>
     <h1>Posts</h1>
     <div class="text-center" v-if="isLoading">
     <div class="spinner-border text-secondary " role="status">
@@ -7,11 +6,11 @@
         </div>
     </div>
     <section class="d-flex container  flex-wrap">
+      <router-link to={name:}></router-link>
         <PostCard v-for="post in posts" :key="post.id" :post="post"/>
         
         <p v-if="posts.length == 0">Pas de post pour le moment</p>
     </section>
-  </main>
 </template>
 
 <script setup>
