@@ -1,26 +1,28 @@
 <template>
-  <div>
-    <b-form-input v-model="title" placeholder="Titre"></b-form-input>
-    <div class="mt-2">Value: {{ title }}</div>
-  </div>
-  <div>
-    <b-form-input v-model="content" placeholder="Entrez votre texte ici"></b-form-input>
-    <div class="mt-2">Value: {{ content }}</div>
-  </div>
-  <div>
-    <b-form-file v-model="file" class="mt-3" plain></b-form-file>
-    <div class="mt-3">Selected file: {{ file ? file.name : '' }}</div>
-  </div>
+  <form>
+    <div class="form-group">
+      <label for="title">Titre</label>
+      <input type="text" class="form-control" id="title">
+    </div>
+    <div class="form-group">
+      <label for="content">Contenu</label>
+      <textarea class="form-control" id="content" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="image">Ajoutez une image</label>
+      <input type="file" class="form-control-file" id="image">
+    </div>
+  </form>
 </template>
 
-<script>
-  export default {
-    data() {
-      return {
-        title: '',
-        content: '',
-        file: null
-      }
+<script setup>
+import { defineProps } from 'vue';
+import { RouterLink } from 'vue-router';
+
+const props = defineProps({
+    post: {
+        type: Object,
+        required: true
     }
-  }
+})
 </script>
