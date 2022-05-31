@@ -2,9 +2,11 @@
     <h1>Posts</h1>
     <div class="text-center" v-if="isLoading">
     <div class="spinner-border text-secondary " role="status">
+            
             <span class="sr-only"></span>
         </div>
     </div>
+    <RouterLink :to="{ name: 'createpost'}" class="btn btn-primary">Créer un nouveau post</RouterLink>
     <section class="d-flex container  flex-wrap">
       <router-link to={name:}></router-link>
         <PostCard v-for="post in posts" :key="post.id" :post="post"/>
