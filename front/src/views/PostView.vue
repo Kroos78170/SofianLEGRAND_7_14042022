@@ -1,6 +1,7 @@
 <template>
        <h1>Post</h1>
     <section>
+       <RouterLink :to="{ name: 'postForm' , params: { 'id' : id}}" class="btn btn-primary">Modifier</RouterLink>
         <h4>{{post.firstname}} {{post.lastname}}</h4>
         <h2>{{ post.title }}</h2>
         <p>{{ post.content }}</p>
@@ -22,10 +23,11 @@
   const post = ref([]);
   const comments = ref([]);
   const route = useRoute();
+  let id = ref(0)
 
   onMounted(async () => {
-    const id = route.params.id
-        post.value = await apiService.getOnePost(id)
-        comments.value = await apiService.getComments(id)
+     id.value = route.params.id
+        post.value = await apiService.getOnePost(id.value)
+        comments.value = await apiService.getComments(id.value)
     })
 </script>

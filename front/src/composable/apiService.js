@@ -6,7 +6,6 @@ export function useApiService() {
 
     async function login(email, password) {
         const myHeaders = new Headers();
-
         myHeaders.append("Content-Type", "application/json");
         const data = await fetch("http://localhost:3000/api/auth/login", {
             method: "POST",
@@ -42,7 +41,6 @@ export function useApiService() {
             method: "GET",
             headers: { Authorization: `Bearer ${token}` }
         }).then(res => res.json())
-        console.log(data)
         return data
     }
 
@@ -52,9 +50,26 @@ export function useApiService() {
             method: "GET",
             headers: { Authorization: `Bearer ${token}` }
         }).then(res => res.json())
-        console.log(data)
         return data
     }
+
+    async function createPost(title, content, image) {
+        const token = localStorageService.getToken();
+        const myHeaders = new Headers({ Authorization: `Bearer ${token}` });
+        // myHeaders.append("Content-Type", "Content-Type: multipart/form-data");
+        // myHeaders.append("Content-Type", "Content-Type: application/json");
+        const body = new FormData()
+        body.append('title', title.value)
+        body.append('content', content.value)
+        body.append('image', image.value)
+        const data = await fetch(`http://localhost:3000/api/posts`, {
+            method: "POST",
+            headers: myHeaders,
+            body: body
+        }).then(res => res.json())
+        return data
+    }
+
 
 
 
@@ -63,6 +78,7 @@ export function useApiService() {
         register,
         getPosts,
         getOnePost,
-        getComments
+        getComments,
+        createPost
     }
 }

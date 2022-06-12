@@ -2,7 +2,7 @@
     <div class="card m-2" style="width:30%"  >
             <div  class="card-body">
                 <h5 class="card-title">{{post.title}}</h5>
-                <img :src="post.image" class="card-img-top" alt="...">
+                <img v-if="post.image" :src="post.image" class="card-img-top" alt="...">
                 <p class="card-text">{{post.content}}</p>
                 <RouterLink :to="{ name: 'post', params: { id: post.id} }" class="btn btn-primary">Lire</RouterLink>
             </div>

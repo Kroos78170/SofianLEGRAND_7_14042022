@@ -26,6 +26,7 @@ exports.getOnePost = (req, res, next) => {
 }
 exports.createPost = (req, res, next) => {
     const userId = tools.getUserIdToken(req.headers.authorization);
+    console.log(req.file, req.body)
     let { title, content } = req.body;
     const image = 'file' in req ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : null;
     let sqlInserts = [title, content, image, userId];
