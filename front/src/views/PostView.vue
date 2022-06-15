@@ -1,11 +1,11 @@
 <template>
        <h1>Post</h1>
     <section>
-       <RouterLink :to="{ name: 'postForm' , params: { 'id' : id}}" class="btn btn-primary">Modifier</RouterLink>
         <h4>{{post.firstname}} {{post.lastname}}</h4>
         <h2>{{ post.title }}</h2>
         <p>{{ post.content }}</p>
         <p>Posté le {{post.date}} à {{post.time}}</p>
+         <RouterLink :to="{ name: 'postForm' , params: { 'id' : id}}" class="btn btn-primary">Modifier</RouterLink>
     </section>
     <section>
       <CommentCard v-for="comment in comments" :key="comment.id" :comment="comment"/>

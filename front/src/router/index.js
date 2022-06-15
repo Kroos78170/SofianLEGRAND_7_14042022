@@ -4,6 +4,7 @@ import RegisterView from '../views/RegisterView.vue'
 import PostsView from '../views/PostsView.vue'
 import PostView from '../views/PostView.vue'
 import PostFormView from '../views/PostFormView.vue'
+import PostFormUpdateView from '../views/PostFormUpdateView.vue'
 
 const router = createRouter({
     history: createWebHistory(
@@ -36,6 +37,12 @@ const router = createRouter({
             path: '/postForm/:id',
             name: 'postForm',
             component: PostFormView,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/postForm/:id',
+            name: 'postForm',
+            component: PostFormUpdateView,
             meta: { requiresAuth: true }
         },
         {

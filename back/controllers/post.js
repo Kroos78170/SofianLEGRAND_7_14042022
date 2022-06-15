@@ -38,8 +38,9 @@ exports.createPost = (req, res, next) => {
 exports.updatePost = (req, res, next) => {
     const userId = tools.getUserIdToken(req.headers.authorization);
     let { title, content } = req.body;
+    const image = 'file' in req ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : null;
     let postId = req.params.id;
-    let sqlInserts = [title, content, postId, userId];
+    let sqlInserts = [title, content, image, postId, userId];
     post.updatePost(sqlInserts)
         .then((response) => {
             res.status(201).json(response);

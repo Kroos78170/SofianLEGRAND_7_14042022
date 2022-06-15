@@ -69,6 +69,22 @@ export function useApiService() {
         }).then(res => res.json())
         return data
     }
+    async function updatePost(title, content, image) {
+        const token = localStorageService.getToken();
+        const myHeaders = new Headers({ Authorization: `Bearer ${token}` });
+        // myHeaders.append("Content-Type", "Content-Type: multipart/form-data");
+        // myHeaders.append("Content-Type", "Content-Type: application/json");
+        const body = new FormData()
+        body.append('title', title.value)
+        body.append('content', content.value)
+        body.append('image', image.value)
+        const data = await fetch(`http://localhost:3000/api/posts`, {
+            method: "PUT",
+            headers: myHeaders,
+            body: body
+        }).then(res => res.json())
+        return data
+    }
 
 
 
@@ -79,6 +95,7 @@ export function useApiService() {
         getPosts,
         getOnePost,
         getComments,
-        createPost
+        createPost,
+        updatePost
     }
 }

@@ -36,12 +36,12 @@ class Post {
     };
     updatePost(sqlInserts) {
         let sql1 = 'SELECT * FROM post WHERE id = ?';
-        sql1 = mysql.format(sql1, sqlInserts[2]);
+        sql1 = mysql.format(sql1, sqlInserts[3]);
         return new Promise((resolve, reject) => {
             connectdb.query(sql1, function(error, result) {
                 if (error) throw error;
-                if (sqlInserts[3] == result[0].id_author) {
-                    let sql2 = 'UPDATE post SET title = ?, content = ? WHERE id = ? AND id_author = ?';
+                if (sqlInserts[4] == result[0].id_author) {
+                    let sql2 = 'UPDATE post SET title = ?, content = ?, image = ? WHERE id = ? AND id_author = ?';
                     sql2 = mysql.format(sql2, sqlInserts);
                     connectdb.query(sql2, function(error, result) {
                         if (error) throw error;
