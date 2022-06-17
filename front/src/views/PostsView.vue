@@ -5,7 +5,7 @@
             <span class="sr-only"></span>
         </div>
     </div>
-    <RouterLink :to="{ name: 'postForm' , params: { id: 0}}" class="btn btn-primary">Nouveau post</RouterLink>
+    <RouterLink :to="{ name: 'postForm' , params: { id: 0 }}" class="btn btn-primary">Nouveau post</RouterLink>
     <section class="d-flex container  flex-wrap">
         <PostCard v-for="post in posts" :key="post.id" :post="post"/>
         <p v-if="posts.length == 0">Pas de post pour le moment</p>

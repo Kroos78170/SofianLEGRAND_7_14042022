@@ -17,12 +17,11 @@
     <div class="mb-3">
         <button type="submit" class="btn btn-success" :class="disabled">Valider</button>
     </div>
-
   </form>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted} from 'vue';
 import { useRouter, useRoute } from 'vue-router'
 import { useApiService } from '../composable/apiService'
 
@@ -35,7 +34,7 @@ const apiService = useApiService()
   const content = ref('')
   const image = ref('')
  
- let id = ref(0)
+ let id = route.params.id
 
  const disabled = computed(() => ({
         disabled: title.value == '' || content.value ==''
@@ -46,14 +45,15 @@ const previewFiles = (event) =>{
   image.value = event.target.files[0]
 }
 async function updatePost(){
-    const update = await apiService.updatePost(title, content, image)
+    const update = await apiService.updatePost(title, content, image, id)
            router.push({
                     "name": "posts"
                 })
                 return update
     }    
-
-    onMounted(async () => {
-      id.value = route.params.id
+onMounted(async () => {
+        const post = await apiService.getOnePost(id)
+        title.value = post.title
+        content.value = post.content
     })
 </script>

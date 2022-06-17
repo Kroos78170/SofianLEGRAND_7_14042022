@@ -5,7 +5,8 @@
         <h2>{{ post.title }}</h2>
         <p>{{ post.content }}</p>
         <p>Posté le {{post.date}} à {{post.time}}</p>
-         <RouterLink :to="{ name: 'postForm' , params: { 'id' : id}}" class="btn btn-primary">Modifier</RouterLink>
+         <RouterLink :to="{ name: 'postForm' , params: { 'id' : id }}" class="btn btn-primary">Modifier</RouterLink>
+         <button class="btn btn-primary" @click="deletePost">Supprimer</button>
     </section>
     <section>
       <CommentCard v-for="comment in comments" :key="comment.id" :comment="comment"/>
@@ -14,7 +15,7 @@
 
 <script setup>
   import { ref, onMounted } from 'vue';
-  import { useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import { useApiService } from '../composable/apiService'
   import CommentCard from '../components/CommentCard.vue';
 
@@ -23,8 +24,16 @@
   const post = ref([]);
   const comments = ref([]);
   const route = useRoute();
-  let id = ref(0)
+  const router = useRouter();
+  let id = ref(0);
 
+  async function deletePost(){
+    const del = await apiService.deletePost(id.value)
+           router.push({
+                    "name": "posts"
+                })
+                return del
+    }    
   onMounted(async () => {
      id.value = route.params.id
         post.value = await apiService.getOnePost(id.value)

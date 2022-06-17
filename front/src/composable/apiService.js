@@ -56,8 +56,6 @@ export function useApiService() {
     async function createPost(title, content, image) {
         const token = localStorageService.getToken();
         const myHeaders = new Headers({ Authorization: `Bearer ${token}` });
-        // myHeaders.append("Content-Type", "Content-Type: multipart/form-data");
-        // myHeaders.append("Content-Type", "Content-Type: application/json");
         const body = new FormData()
         body.append('title', title.value)
         body.append('content', content.value)
@@ -69,22 +67,30 @@ export function useApiService() {
         }).then(res => res.json())
         return data
     }
-    async function updatePost(title, content, image) {
+    async function updatePost(title, content, image, id) {
         const token = localStorageService.getToken();
         const myHeaders = new Headers({ Authorization: `Bearer ${token}` });
-        // myHeaders.append("Content-Type", "Content-Type: multipart/form-data");
-        // myHeaders.append("Content-Type", "Content-Type: application/json");
         const body = new FormData()
         body.append('title', title.value)
         body.append('content', content.value)
         body.append('image', image.value)
-        const data = await fetch(`http://localhost:3000/api/posts`, {
+        const data = await fetch(`http://localhost:3000/api/posts/${id}`, {
             method: "PUT",
             headers: myHeaders,
             body: body
         }).then(res => res.json())
         return data
     }
+    async function deletePost(id) {
+        const token = localStorageService.getToken();
+        const myHeaders = new Headers({ Authorization: `Bearer ${token}` });
+        const data = await fetch(`http://localhost:3000/api/posts/${id}`, {
+            method: "DELETE",
+            headers: myHeaders,
+        }).then(res => res.json())
+        return data
+    }
+
 
 
 
@@ -96,6 +102,7 @@ export function useApiService() {
         getOnePost,
         getComments,
         createPost,
-        updatePost
+        updatePost,
+        deletePost
     }
 }
