@@ -14,7 +14,7 @@ class Post {
         })
     };
     getOnePost(sqlInserts) {
-        let sql = "SELECT p.id, p.title, p.content, DATE_FORMAT(DATE(p.created_at), '%d/%m/%Y') AS date, TIME(p.created_at) AS time, u.firstname, u.lastname FROM post p JOIN user u ON u.id = p.id_author WHERE p.id = ?";
+        let sql = "SELECT p.id, p.title, p.content, p.image, DATE_FORMAT(DATE(p.created_at), '%d/%m/%Y') AS date, TIME(p.created_at) AS time, u.firstname, u.lastname, p.id_author as idAuthor FROM post p JOIN user u ON u.id = p.id_author WHERE p.id = ?";
         sql = mysql.format(sql, sqlInserts[0])
         return new Promise((resolve) => {
             connectdb.query(sql, function(error, result) {
