@@ -90,6 +90,18 @@ export function useApiService() {
         }).then(res => res.json())
         return data
     }
+    async function createComment(content, id) {
+        const token = localStorageService.getToken();
+        const myHeaders = new Headers({ Authorization: `Bearer ${token}` });
+        const body = new FormData()
+        body.append('content', content.value)
+        const data = await fetch(`http://localhost:3000/api/posts/${id}/comments`, {
+            method: "POST",
+            headers: myHeaders,
+            body: body
+        }).then(res => res.json())
+        return data
+    }
 
 
 
@@ -103,6 +115,7 @@ export function useApiService() {
         getComments,
         createPost,
         updatePost,
-        deletePost
+        deletePost,
+        createComment
     }
 }

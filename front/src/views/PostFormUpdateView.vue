@@ -12,6 +12,7 @@
       <label for="image">Image</label>
       <div>
         <input type="file" class="form-control-file" id="image" @change="previewFiles">
+        <img v-if="imagePreview" :src="imagePreview" class="card-img-top" alt="..."/>
       </div>
     </div>
     <div class="mb-3">
@@ -32,7 +33,8 @@ const apiService = useApiService()
 
   const title = ref('')
   const content = ref('')
-  const image = ref('')
+  const image = ref(null)
+  const imagePreview = ref(null)
  
  let id = route.params.id
 
@@ -43,6 +45,7 @@ const apiService = useApiService()
 const previewFiles = (event) =>{
   console.log(event.target.files[0])
   image.value = event.target.files[0]
+  imagePreview.value = URL.createObjectURL(event.target.files[0])
 }
 async function updatePost(){
     const update = await apiService.updatePost(title, content, image, id)
@@ -55,5 +58,7 @@ onMounted(async () => {
         const post = await apiService.getOnePost(id)
         title.value = post.title
         content.value = post.content
+        image.value = post.image
+        imagePreview.value = post.image
     })
 </script>

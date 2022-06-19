@@ -44,6 +44,11 @@ export const useUserStore = defineStore('user', {
         disconnect() {
             localStorageService.removeUser();
             this.userData = null
+        },
+        isAuthor(idAuthor) {
+
+
+            /// return true ou false
         }
     }
 })
