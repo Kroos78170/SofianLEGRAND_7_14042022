@@ -28,7 +28,7 @@ CREATE TABLE comment(
     id_author INT NOT NULL,
     id_post INT NOT NULL, 
     FOREIGN KEY (id_author) REFERENCES user(id),
-    FOREIGN KEY (id_post) REFERENCES post(id),
+    FOREIGN KEY (id_post) REFERENCES post(id) ON DELETE CASCADE,
     created_at DATETIME
 ) DEFAULT CHARSET UTF8 ;
 

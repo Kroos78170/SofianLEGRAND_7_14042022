@@ -93,12 +93,13 @@ export function useApiService() {
     async function createComment(content, id) {
         const token = localStorageService.getToken();
         const myHeaders = new Headers({ Authorization: `Bearer ${token}` });
+        myHeaders.append("Content-Type", "application/json");
         const body = new FormData()
         body.append('content', content.value)
         const data = await fetch(`http://localhost:3000/api/posts/${id}/comments`, {
             method: "POST",
             headers: myHeaders,
-            body: body
+            body: JSON.stringify({ content: content.value })
         }).then(res => res.json())
         return data
     }

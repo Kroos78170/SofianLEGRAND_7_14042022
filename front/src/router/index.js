@@ -34,14 +34,14 @@ const router = createRouter({
             meta: { requiresAuth: true }
         },
         {
-            path: '/postForm/:id',
+            path: '/postForm',
             name: 'postForm',
             component: PostFormView,
             meta: { requiresAuth: true }
         },
         {
             path: '/postForm/:id',
-            name: 'postForm',
+            name: 'postFormUpdate',
             component: PostFormUpdateView,
             meta: { requiresAuth: true }
         },

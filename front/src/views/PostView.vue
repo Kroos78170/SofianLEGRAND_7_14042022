@@ -6,12 +6,14 @@
         <p>{{ post.content }}</p>
         <img v-if="post.image" :src="post.image" class="card-img-top" alt="..."/>
         <p>Posté le {{post.date}} à {{post.time}}</p>
-         <RouterLink :to="{ name: 'postForm' , params: { 'id' : id }}" class="btn btn-primary">Modifier</RouterLink>
-         <button class="btn btn-primary" @click="deletePost">Supprimer</button>
+         <RouterLink :to="{ name: 'postFormUpdate' , params: { 'id' : id }}" class="btn btn-primary">Modifier</RouterLink>
+         <button class="btn btn-danger" @click="deletePost">Supprimer</button>
     </section>
-    <section class="d-flex flex-wrap form-group" @submit.prevent="createComment">
+    <section>
+    <form class="d-flex flex-wrap" id="form" @submit.prevent="createComment(id)">
       <textarea class="form-control" id="content" rows="1" v-model="content" placeholder="Ajouter un commentaire"></textarea>
       <button type="submit" class="btn btn-success" id="btn" :class="disabled">Valider</button>
+    </form>
       <CommentCard v-for="comment in comments" :key="comment.id" :comment="comment" style = "width:100%"/>
     </section>
 </template>
@@ -32,7 +34,7 @@
   const disabled = computed(() => ({
         disabled: content.value ==''
     }))
-  let id = route.params.id
+ const id = route.params.id
 
   async function deletePost(){
     const del = await apiService.deletePost(id)
@@ -42,12 +44,10 @@
                 return del
     }    
 
-  async function createComment(){
-    const create = await apiService.createComment(id)
-           router.push({
-                    "name": "post/:id"
-                })
-                return create
+  async function createComment(id){
+    const comment = await apiService.createComment(content,id)
+         comments.value = await apiService.getComments(id)
+         return comment
     }    
   onMounted(async () => {
         post.value = await apiService.getOnePost(id)
@@ -57,14 +57,13 @@
 <style>
 #content {
   width : 86%;
-  padding-left : 0px;
   margin-left : 8px;
   margin-top : 30px;
 }
 
 #btn {
   width : 12%;
-  margin-left : 10px;
+  margin-left : 15px;
   margin-top : 30px;
 }
 </style>

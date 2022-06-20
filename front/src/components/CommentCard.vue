@@ -5,7 +5,7 @@
           <p class="card-text">{{comment.content}}</p>
           <p>Posté le {{comment.date}} à {{comment.time}}</p>
           <button class="btn btn-primary">Modifier</button>
-          <button class="btn btn-primary">Supprimer</button>
+          <button class="btn btn-danger">Supprimer</button>
         </div>
       </div>
 </template>
