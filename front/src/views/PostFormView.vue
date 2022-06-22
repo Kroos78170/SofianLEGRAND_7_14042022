@@ -12,6 +12,7 @@
       <label for="image">Image</label>
       <div>
         <input type="file" class="form-control-file" id="image" @change="previewFiles">
+        <img v-if="imagePreview" :src="imagePreview" class="card-img-top" alt="..."/>
       </div>
     </div>
     <div class="mb-3">
@@ -32,7 +33,8 @@ const apiService = useApiService()
 
   const title = ref('')
   const content = ref('')
-  const image = ref('')
+  const image = ref(null)
+  const imagePreview = ref(null)
  
 
  const disabled = computed(() => ({
@@ -42,6 +44,7 @@ const apiService = useApiService()
 const previewFiles = (event) =>{
   console.log(event.target.files[0])
   image.value = event.target.files[0]
+  imagePreview.value = URL.createObjectURL(event.target.files[0])
 }
 async function createPost(){
     const create = await apiService.createPost(title, content, image)

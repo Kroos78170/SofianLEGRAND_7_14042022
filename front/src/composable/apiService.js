@@ -103,6 +103,28 @@ export function useApiService() {
         }).then(res => res.json())
         return data
     }
+    async function updateComment(content, id) {
+        const token = localStorageService.getToken();
+        const myHeaders = new Headers({ Authorization: `Bearer ${token}` });
+        myHeaders.append("Content-Type", "application/json");
+        const body = new FormData()
+        body.append('content', content.value)
+        const data = await fetch(`http://localhost:3000/api/posts/${id}/comments/${id}`, {
+            method: "PUT",
+            headers: myHeaders,
+            body: JSON.stringify({ content: content.value })
+        }).then(res => res.json())
+        return data
+    }
+    async function deleteComment(id) {
+        const token = localStorageService.getToken();
+        const myHeaders = new Headers({ Authorization: `Bearer ${token}` });
+        const data = await fetch(`http://localhost:3000/api/posts/${id}/comments/${id}`, {
+            method: "DELETE",
+            headers: myHeaders,
+        }).then(res => res.json())
+        return data
+    }
 
 
 
@@ -117,6 +139,8 @@ export function useApiService() {
         createPost,
         updatePost,
         deletePost,
-        createComment
+        createComment,
+        updateComment,
+        deleteComment
     }
 }

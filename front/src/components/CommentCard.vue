@@ -12,12 +12,15 @@
 <script setup>
 import { defineProps } from 'vue';
 
+
 const props = defineProps({
     comment: {
         type: Object,
         required: true
     }
 })
+
+
 </script>
  
  

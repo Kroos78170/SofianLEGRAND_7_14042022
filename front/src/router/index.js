@@ -5,6 +5,8 @@ import PostsView from '../views/PostsView.vue'
 import PostView from '../views/PostView.vue'
 import PostFormView from '../views/PostFormView.vue'
 import PostFormUpdateView from '../views/PostFormUpdateView.vue'
+import CommentFormUpdateView from '../views/CommentFormUpdateView.vue'
+
 
 const router = createRouter({
     history: createWebHistory(
@@ -43,6 +45,12 @@ const router = createRouter({
             path: '/postForm/:id',
             name: 'postFormUpdate',
             component: PostFormUpdateView,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/commentFormUpdate/:id',
+            name: 'commentFormUpdate',
+            component: CommentFormUpdateView,
             meta: { requiresAuth: true }
         },
         {
