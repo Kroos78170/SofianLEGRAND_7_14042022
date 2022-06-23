@@ -74,6 +74,15 @@ exports.getComments = (req, res, next) => {
             res.status(200).json(response);
         })
 }
+
+exports.getComment = (req, res, next) => {
+    let commentId = req.params.id;
+    let sqlInserts = [commentId];
+    post.getComment(sqlInserts)
+        .then((response) => {
+            res.status(200).json(response);
+        })
+}
 exports.createComment = (req, res, next) => {
     const userId = tools.getUserIdToken(req.headers.authorization);
     let postId = req.params.id;

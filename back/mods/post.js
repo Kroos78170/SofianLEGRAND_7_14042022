@@ -77,7 +77,7 @@ class Post {
     // COMMENTS
 
     getComments(sqlInserts) {
-        let sql = "SELECT comment.id, comment.content, DATE_FORMAT(DATE(comment.created_at), '%d/%m/%Y') AS date, TIME(comment.created_at) AS time, user.lastname, user.firstname FROM comment JOIN user ON comment.id_author = user.id WHERE comment.id_post = ? ORDER BY comment.created_at DESC";
+        let sql = "SELECT comment.id, comment.id_post as postId, comment.content, DATE_FORMAT(DATE(comment.created_at), '%d/%m/%Y') AS date, TIME(comment.created_at) AS time, user.lastname, user.firstname FROM comment JOIN user ON comment.id_author = user.id WHERE comment.id_post = ? ORDER BY comment.created_at DESC";
         sql = mysql.format(sql, sqlInserts);
         return new Promise((resolve) => {
             connectdb.query(sql, function(error, result) {
@@ -87,6 +87,19 @@ class Post {
 
         })
     }
+
+    getComment(sqlInserts) {
+        let sql = "SELECT comment.id, comment.id_post as postId, comment.content, DATE_FORMAT(DATE(comment.created_at), '%d/%m/%Y') AS date, TIME(comment.created_at) AS time, user.lastname, user.firstname FROM comment JOIN user ON comment.id_author = user.id WHERE comment.id = ? ORDER BY comment.created_at DESC";
+        sql = mysql.format(sql, sqlInserts);
+        return new Promise((resolve) => {
+            connectdb.query(sql, function(error, result) {
+                if (error) throw error;
+                resolve(result);
+            })
+
+        })
+    }
+
     createComment(sqlInserts) {
         let sql = 'INSERT INTO comment (content, id_author, id_post, created_at) VALUES(?, ?, ?, NOW())';
         sql = mysql.format(sql, sqlInserts);
