@@ -16,6 +16,7 @@ export const useUserStore = defineStore('user', {
     },
     getters: {
         isAuthenticated: (state) => state.userData != null,
+        getUser: (state) => state.userData != null ? state.userData : null,
     },
     actions: {
         setUser(user) {
@@ -47,8 +48,8 @@ export const useUserStore = defineStore('user', {
         },
         isAuthor(idAuthor) {
 
-
-            /// return true ou false
+            return this.userData.userId == idAuthor
+                /// return true ou false
         }
     }
 })

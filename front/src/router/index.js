@@ -48,7 +48,7 @@ const router = createRouter({
             meta: { requiresAuth: true }
         },
         {
-            path: '/commentFormUpdate/:id',
+            path: '/commentFormUpdate/:commentId',
             name: 'commentFormUpdate',
             component: CommentFormUpdateView,
             meta: { requiresAuth: true }

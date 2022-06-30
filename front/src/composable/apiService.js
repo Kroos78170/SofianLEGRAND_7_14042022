@@ -26,6 +26,16 @@ export function useApiService() {
         return data
     }
 
+    async function seeMyProfile() {
+        const token = localStorageService.getToken();
+        const myHeaders = new Headers({ Authorization: `Bearer ${token}` })
+        const data = await fetch("http://localhost:3000/api/auth", {
+            method: "GET",
+            headers: myHeaders,
+        }).then(res => res.json())
+        return data
+    }
+
     async function getPosts() {
         const token = localStorageService.getToken();
         const data = await fetch("http://localhost:3000/api/posts", {
@@ -47,6 +57,15 @@ export function useApiService() {
     async function getComments(id) {
         const token = localStorageService.getToken();
         const data = await fetch(`http://localhost:3000/api/posts/${id}/comments`, {
+            method: "GET",
+            headers: { Authorization: `Bearer ${token}` }
+        }).then(res => res.json())
+        return data
+    }
+
+    async function getComment(commentId) {
+        const token = localStorageService.getToken();
+        const data = await fetch(`http://localhost:3000/api/posts/comments/${commentId}`, {
             method: "GET",
             headers: { Authorization: `Bearer ${token}` }
         }).then(res => res.json())
@@ -90,36 +109,36 @@ export function useApiService() {
         }).then(res => res.json())
         return data
     }
-    async function createComment(content, id) {
+    async function createComment(content, postId) {
         const token = localStorageService.getToken();
         const myHeaders = new Headers({ Authorization: `Bearer ${token}` });
         myHeaders.append("Content-Type", "application/json");
         const body = new FormData()
         body.append('content', content.value)
-        const data = await fetch(`http://localhost:3000/api/posts/${id}/comments`, {
+        const data = await fetch(`http://localhost:3000/api/posts/${postId}/comments`, {
             method: "POST",
             headers: myHeaders,
             body: JSON.stringify({ content: content.value })
         }).then(res => res.json())
         return data
     }
-    async function updateComment(content, id) {
+    async function updateComment(content, commentId) {
         const token = localStorageService.getToken();
         const myHeaders = new Headers({ Authorization: `Bearer ${token}` });
         myHeaders.append("Content-Type", "application/json");
         const body = new FormData()
         body.append('content', content.value)
-        const data = await fetch(`http://localhost:3000/api/posts/${id}/comments/${id}`, {
+        const data = await fetch(`http://localhost:3000/api/posts/comments/${commentId}`, {
             method: "PUT",
             headers: myHeaders,
             body: JSON.stringify({ content: content.value })
         }).then(res => res.json())
         return data
     }
-    async function deleteComment(id) {
+    async function deleteComment(commentId) {
         const token = localStorageService.getToken();
         const myHeaders = new Headers({ Authorization: `Bearer ${token}` });
-        const data = await fetch(`http://localhost:3000/api/posts/${id}/comments/${id}`, {
+        const data = await fetch(`http://localhost:3000/api/posts/comments/${commentId}`, {
             method: "DELETE",
             headers: myHeaders,
         }).then(res => res.json())
@@ -133,9 +152,11 @@ export function useApiService() {
     return {
         login,
         register,
+        seeMyProfile,
         getPosts,
         getOnePost,
         getComments,
+        getComment,
         createPost,
         updatePost,
         deletePost,

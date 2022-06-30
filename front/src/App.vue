@@ -1,19 +1,3 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-
-import {useRouter} from 'vue-router'
-import { useUserStore } from './stores/user'
-
-
-const router = useRouter()
-const userStore = useUserStore()
-
-function disconnect(){
-  userStore.disconnect();
-  router.push('/login')
-}
-</script>
-
 <template>
   <header>
     
@@ -33,16 +17,19 @@ function disconnect(){
           <RouterLink to="/about" class="nav-link">About</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/posts" v-if="userStore.isAuthenticated" class="nav-link active">Posts</RouterLink>
+          <RouterLink to="/posts" v-if="userStore.isAuthenticated" class="nav-link">Posts</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/register" v-if="!userStore.isAuthenticated" class="nav-link active">Register</RouterLink>
+          <RouterLink to="/register" v-if="!userStore.isAuthenticated" class="nav-link">Register</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/login" v-if="!userStore.isAuthenticated" class="nav-link active">Login</RouterLink>
+          <RouterLink to="/login" v-if="!userStore.isAuthenticated" class="nav-link">Login</RouterLink>
         </li>
         <li class="nav-item">
-          <RouterLink to="/login" v-if="userStore.isAuthenticated" class="nav-link active" @click="disconnect">Disconnect</RouterLink>
+          <RouterLink to="/login" v-if="userStore.isAuthenticated" class="nav-link" @click="disconnect">Disconnect</RouterLink>
+        </li>
+         <li class="nav-item" v-if="userStore.isAuthenticated">
+          <a  class="nav-link">{{fullName}}</a>
         </li>
        
       </ul>
@@ -58,6 +45,37 @@ function disconnect(){
   <RouterView />
   </main>
 </template>
+
+<script setup>
+import { ref, onMounted, computed } from 'vue'
+import { RouterLink, RouterView } from 'vue-router'
+import { useApiService } from './composable/apiService'
+
+import {useRouter} from 'vue-router'
+import { useUserStore } from './stores/user'
+
+const apiService = useApiService()
+const router = useRouter()
+const userStore = useUserStore()
+
+// const user = ref( userStore.getUser)
+
+const fullName = computed( () => 
+  userStore.isAuthenticated ? userStore.userData.fullName : null
+
+  
+)
+
+function disconnect(){
+  userStore.disconnect();
+  router.push('/login')
+}
+
+ onMounted(async () => {
+        // user.value = userStore.userData
+        // console.log(user.value)
+    })
+</script>
 
 <style>
 @import '@/assets/base.css';

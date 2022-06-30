@@ -36,26 +36,25 @@ const apiService = useApiService()
   const image = ref(null)
   const imagePreview = ref(null)
  
- let id = route.params.id
+ let postId = route.params.id
 
  const disabled = computed(() => ({
         disabled: title.value == '' || content.value ==''
     }))
 
 const previewFiles = (event) =>{
-  console.log(event.target.files[0])
   image.value = event.target.files[0]
   imagePreview.value = URL.createObjectURL(event.target.files[0])
 }
 async function updatePost(){
-    const update = await apiService.updatePost(title, content, image, id)
+    const update = await apiService.updatePost(title, content, image, postId)
            router.push({
                     "name": "posts"
                 })
                 return update
     }    
 onMounted(async () => {
-        const post = await apiService.getOnePost(id)
+        const post = await apiService.getOnePost(postId)
         title.value = post.title
         content.value = post.content
         image.value = post.image

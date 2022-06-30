@@ -54,30 +54,36 @@ class Post {
         });
     };
     deletePost(sqlInserts) {
-        let sql1 = 'SELECT * FROM post where id = ?';
+        let sql1 = 'SELECT * FROM post WHERE id = ?';
         sql1 = mysql.format(sql1, sqlInserts[0]);
         return new Promise((resolve, reject) => {
             connectdb.query(sql1, function(error, result) {
                 if (error) throw error;
-                if (sqlInserts[1] == result[0].id_author) {
-                    let sql2 = 'DELETE FROM post WHERE id = ? AND id_author = ?';
-                    sql2 = mysql.format(sql2, sqlInserts);
-                    connectdb.query(sql2, function(error, result) {
-                        if (error) throw error;
-                        resolve({ message: 'Post supprimé !' });
-                    })
-                } else {
-                    reject({ error: 'fonction indisponible' });
-                }
+                let sql3 = 'SELECT * FROM user WHERE id = ?'
+                sql3 = mysql.format(sql3, sqlInserts[1]);
+                connectdb.query(sql3, function(error3, result3) {
+                    if (error3) throw error3;
+                    if (sqlInserts[1] == result[0].id_author || result3[0].moderation == 1) {
+                        let sql2 = 'DELETE FROM post WHERE id = ?';
+                        sql2 = mysql.format(sql2, sqlInserts[0]);
+                        connectdb.query(sql2, function(error, result) {
+                            if (error) throw error;
+                            resolve({ message: 'Post supprimé !' });
+                        })
+                    } else {
+                        reject({ error: 'fonction indisponible' });
+                    }
 
-            });
+                });
+            })
+
         })
     };
 
     // COMMENTS
 
     getComments(sqlInserts) {
-        let sql = "SELECT comment.id, comment.id_post as postId, comment.content, DATE_FORMAT(DATE(comment.created_at), '%d/%m/%Y') AS date, TIME(comment.created_at) AS time, user.lastname, user.firstname FROM comment JOIN user ON comment.id_author = user.id WHERE comment.id_post = ? ORDER BY comment.created_at DESC";
+        let sql = "SELECT comment.id, comment.id_post as postId, comment.content, DATE_FORMAT(DATE(comment.created_at), '%d/%m/%Y') AS date, TIME(comment.created_at) AS time, user.lastname, user.firstname, user.id AS idAuthor FROM comment JOIN user ON comment.id_author = user.id WHERE comment.id_post = ? ORDER BY comment.created_at DESC";
         sql = mysql.format(sql, sqlInserts);
         return new Promise((resolve) => {
             connectdb.query(sql, function(error, result) {
@@ -89,12 +95,12 @@ class Post {
     }
 
     getComment(sqlInserts) {
-        let sql = "SELECT comment.id, comment.id_post as postId, comment.content, DATE_FORMAT(DATE(comment.created_at), '%d/%m/%Y') AS date, TIME(comment.created_at) AS time, user.lastname, user.firstname FROM comment JOIN user ON comment.id_author = user.id WHERE comment.id = ? ORDER BY comment.created_at DESC";
+        let sql = "SELECT comment.id, comment.id_post as postId, comment.content, DATE_FORMAT(DATE(comment.created_at), '%d/%m/%Y') AS date, TIME(comment.created_at) AS time, user.lastname, user.firstname, user.id AS idAuthor FROM comment JOIN user ON comment.id_author = user.id WHERE comment.id = ? ORDER BY comment.created_at DESC";
         sql = mysql.format(sql, sqlInserts);
         return new Promise((resolve) => {
             connectdb.query(sql, function(error, result) {
                 if (error) throw error;
-                resolve(result);
+                resolve(result[0]);
             })
 
         })
