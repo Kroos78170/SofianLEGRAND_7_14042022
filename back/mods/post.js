@@ -141,21 +141,26 @@ class Post {
         return new Promise((resolve, reject) => {
             connectdb.query(sql1, function(error, result) {
                 if (error) throw error;
-                if (sqlInserts[1] == result[0].id_author) {
-                    let sql2 = 'DELETE FROM comment WHERE id = ? AND id_author = ?';
-                    sql2 = mysql.format(sql2, sqlInserts);
-                    connectdb.query(sql2, function(error, result) {
-                        if (error) throw error;
-                        resolve({ message: 'Commentaire supprimé !' });
-                    })
-                } else {
-                    reject({ error: 'fonction indisponible' });
-                }
+                let sql3 = 'SELECT * FROM user WHERE id = ?'
+                sql3 = mysql.format(sql3, sqlInserts[1]);
+                connectdb.query(sql3, function(error3, result3) {
+                    if (error3) throw error3;
+                    if (sqlInserts[1] == result[0].id_author || result3[0].moderation == 1) {
+                        let sql2 = 'DELETE FROM comment WHERE id = ?';
+                        sql2 = mysql.format(sql2, sqlInserts[0]);
+                        connectdb.query(sql2, function(error, result) {
+                            if (error) throw error;
+                            resolve({ message: 'Commentaire supprimé !' });
+                        })
+                    } else {
+                        reject({ error: 'fonction indisponible' });
+                    }
 
-            });
+                });
+            })
         })
-    }
-};
+    };
+}
 
 
 module.exports = Post;

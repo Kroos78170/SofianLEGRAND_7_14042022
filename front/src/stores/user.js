@@ -48,7 +48,7 @@ export const useUserStore = defineStore('user', {
         },
         isAuthor(idAuthor) {
 
-            return this.userData.userId == idAuthor
+            return this.userData.userId == idAuthor || this.userData.moderation == 1
                 /// return true ou false
         }
     }
