@@ -40,18 +40,23 @@ class Post {
         return new Promise((resolve, reject) => {
             connectdb.query(sql1, function(error, result) {
                 if (error) throw error;
-                if (sqlInserts[4] == result[0].id_author) {
-                    let sql2 = 'UPDATE post SET title = ?, content = ?, image = ? WHERE id = ? AND id_author = ?';
-                    sql2 = mysql.format(sql2, sqlInserts);
-                    connectdb.query(sql2, function(error, result) {
-                        if (error) throw error;
-                        resolve({ message: 'Post modifié !' });
-                    })
-                } else {
-                    reject({ error: 'fonction indisponible' });
-                }
-            })
-        });
+                let sql3 = 'SELECT * FROM user WHERE id = ?'
+                sql3 = mysql.format(sql3, sqlInserts[4]);
+                connectdb.query(sql3, function(error3, result3) {
+                    if (error3) throw error3;
+                    if (sqlInserts[4] == result[0].id_author || result3[0].moderation == 1) {
+                        let sql2 = 'UPDATE post SET title = ?, content = ?, image = ? WHERE id = ?';
+                        sql2 = mysql.format(sql2, sqlInserts);
+                        connectdb.query(sql2, function(error, result) {
+                            if (error) throw error;
+                            resolve({ message: 'Post modifié !' });
+                        })
+                    } else {
+                        reject({ error: 'fonction indisponible' });
+                    }
+                })
+            });
+        })
     };
     deletePost(sqlInserts) {
         let sql1 = 'SELECT * FROM post WHERE id = ?';
@@ -122,18 +127,23 @@ class Post {
         return new Promise((resolve) => {
             connectdb.query(sql1, function(error, result) {
                 if (error) throw error;
-                if (sqlInserts[2] == result[0].id_author) {
-                    let sql2 = 'UPDATE comment SET content = ? WHERE id = ? AND id_author = ?';
-                    sql2 = mysql.format(sql2, sqlInserts);
-                    connectdb.query(sql2, function(error, result) {
-                        if (error) throw error;
-                        resolve({ message: 'Commentaire modifié !' });
-                    })
-                } else {
-                    reject({ error: 'fonction indisponible' });
-                }
-            })
-        });
+                let sql3 = 'SELECT * FROM user WHERE id = ?'
+                sql3 = mysql.format(sql3, sqlInserts[2]);
+                connectdb.query(sql3, function(error3, result3) {
+                    if (error3) throw error3;
+                    if (sqlInserts[2] == result[0].id_author || result3[0].moderation == 1) {
+                        let sql2 = 'UPDATE comment SET content = ? WHERE id = ?';
+                        sql2 = mysql.format(sql2, sqlInserts);
+                        connectdb.query(sql2, function(error, result) {
+                            if (error) throw error;
+                            resolve({ message: 'Commentaire modifié !' });
+                        })
+                    } else {
+                        reject({ error: 'fonction indisponible' });
+                    }
+                })
+            });
+        })
     }
     deleteComment(sqlInserts) {
         let sql1 = 'SELECT * FROM comment where id = ?';

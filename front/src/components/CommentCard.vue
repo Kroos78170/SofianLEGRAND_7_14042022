@@ -5,7 +5,7 @@
           <p class="card-text">{{comment.content}}</p>
           <p>Posté le {{comment.date}} à {{comment.time}}</p>
           <RouterLink v-if="userStore.isAuthor(comment.idAuthor)" :to="{ name: 'commentFormUpdate' , params: {'commentId' : comment.id}}" class="btn btn-primary">Modifier</RouterLink>
-          <button v-if="userStore.isAuthor(comment.idAuthor)"  class="btn btn-danger" @click="deleteComment(comment.id, postId)">Supprimer</button>
+          <button v-if="userStore.isAuthor(comment.idAuthor)"  class="btn btn-danger" @click="deleteComment(comment.id)">Supprimer</button>
         </div>
       </div>
 </template>
@@ -17,17 +17,15 @@ import { useApiService } from '../composable/apiService'
 import { useUserStore } from '../stores/user';
 
 const apiService = useApiService()
-
 const router = useRouter()
  const userStore = useUserStore()
 
 
-async function deleteComment(commentId, postId){
+async function deleteComment(commentId){
    const del = await apiService.deleteComment(commentId)
-   //creer un evenement qui dit que tu ecoute déclenchemznr de l'evenement suppression
-           router.push({
-                    name: 'post', params : {id : postId}
-                })
+    router.push({
+        "name" : "posts"
+    })
                 return del
     }   
 
@@ -36,8 +34,8 @@ const props = defineProps({
         type: Object,
         required: true
     },
-    postId: {
-        type: Number,
+    post:{
+        type: Object,
         required: true
     }
 })

@@ -14,7 +14,7 @@
       <textarea class="form-control" id="content" rows="1" v-model="content" placeholder="Ajouter un commentaire"></textarea>
       <button type="submit" class="btn btn-success" id="btn" :class="disabled">Valider</button>
     </form>
-      <CommentCard v-for="comment in comments" :key="comment.id" :comment="comment" :postId="post.id" style = "width:100%"/>
+      <CommentCard v-for="comment in comments" :key="comment.id" :comment="comment" :post="post" style = "width:100%"/>
     </section>
 </template>
 
