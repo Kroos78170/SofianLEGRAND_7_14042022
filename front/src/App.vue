@@ -26,7 +26,11 @@
           <RouterLink to="/login" v-if="userStore.isAuthenticated" class="nav-link" @click="disconnect">Disconnect</RouterLink>
         </li>
          <li class="nav-item" v-if="userStore.isAuthenticated">
-          <a  class="nav-link">{{fullName}}</a>
+          <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#Modal">
+              {{ fullName }}
+          </button>
+
+
         </li>
        
       </ul>
@@ -34,6 +38,27 @@
     </div>
   </div>
 </nav>
+
+<!-- Modal -->
+      <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="Modal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="Modal">{{fullName}}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Prénom : {{user.firstName}}
+            </div>
+            <div class="modal-body">
+              Nom : {{user.lastName}}
+            </div>
+            <div class="modal-body">
+              Email : {{user.email}}
+            </div>
+          </div>
+        </div>
+      </div>
 
      
     </div>
@@ -44,7 +69,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onUpdated, computed } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import { useApiService } from './composable/apiService'
 
@@ -55,12 +80,10 @@ const apiService = useApiService()
 const router = useRouter()
 const userStore = useUserStore()
 
-// const user = ref( userStore.getUser)
+const user = ref([])
 
 const fullName = computed( () => 
   userStore.isAuthenticated ? userStore.userData.fullName : null
-
-  
 )
 
 function disconnect(){
@@ -68,9 +91,8 @@ function disconnect(){
   router.push('/login')
 }
 
- onMounted(async () => {
-        // user.value = userStore.userData
-        // console.log(user.value)
+ onUpdated(async () => {
+         user.value = await apiService.seeMyProfile()
     })
 </script>
 
