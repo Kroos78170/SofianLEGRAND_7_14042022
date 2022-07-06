@@ -18,6 +18,7 @@ const router = useRouter()
 
 const content = ref('');
 const commentId = route.params.commentId
+const postId = route.params.postId
 
 const disabled = computed(() => ({
         disabled: content.value ==''
@@ -26,7 +27,7 @@ const disabled = computed(() => ({
 async function updateComment(){
     const update = await apiService.updateComment(content, commentId)
            router.push({
-                    "name": "posts"
+                    name: "post",  params : {id : postId} 
                 })
                 return update
     }    

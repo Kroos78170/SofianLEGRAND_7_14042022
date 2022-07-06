@@ -14,7 +14,7 @@
       <textarea class="form-control" id="content" rows="1" v-model="content" placeholder="Ajouter un commentaire"></textarea>
       <button type="submit" class="btn btn-success" id="btn" :class="disabled">Valider</button>
     </form>
-      <CommentCard v-for="comment in comments" :key="comment.id" :comment="comment" :post="post" style = "width:100%"/>
+      <CommentCard v-for="comment in comments" :key="comment.id" :comment="comment" :post="post" @deleteComment="refreshComment" style = "width:100%"/>
     </section>
 </template>
 
@@ -45,6 +45,9 @@
                 })
                 return del
     }    
+    async function refreshComment() {
+      comments.value = await apiService.getComments(postId)
+    }
 
   async function createComment(postId){
     const comment = await apiService.createComment(content,postId)
