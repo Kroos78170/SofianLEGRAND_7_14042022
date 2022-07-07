@@ -1,2 +1,0 @@
-login : legrand@gmail.com
-password : 1234
