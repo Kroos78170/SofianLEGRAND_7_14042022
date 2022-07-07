@@ -1,5 +1,5 @@
 <template>
-    <div class="card m-2" style="width:30%"  >
+    <div class="card m-2" >
             <div  class="card-body">
                 <h5 class="card-title">{{post.title}}</h5>
                 <img v-if="post.image" :src="post.image" class="card-img-top" alt="...">
@@ -21,7 +21,12 @@ const props = defineProps({
 
 </script>
 <style scoped>
-.card-body img{
-    max-width: 200px;
+.card{
+    width:30%;
 }
+@media (max-width: 542px){
+    .card{
+            width: 100%;
+        }
+    }
 </style>

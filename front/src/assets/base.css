@@ -1,0 +1,13 @@
+#navbarSupportedContent {
+    position: absolute;
+    right: 10%;
+    justify-content: space-between;
+}
+
+.nav-item {
+    margin: 0 10px
+}
+
+.navbar-brand {
+    margin: 0 10px;
+}

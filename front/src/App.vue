@@ -48,13 +48,9 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              Prénom : {{user.firstName}}
-            </div>
-            <div class="modal-body">
-              Nom : {{user.lastName}}
-            </div>
-            <div class="modal-body">
-              Email : {{user.email}}
+             <p>Prénom : {{user.firstName}}</p> 
+             <p>Nom : {{user.lastName}}</p>
+             <p>Email : {{user.email}}</p> 
             </div>
           </div>
         </div>

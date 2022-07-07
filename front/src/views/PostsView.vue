@@ -6,7 +6,7 @@
         </div>
     </div>
     <RouterLink :to="{ name: 'postForm'}" class="btn btn-primary">Nouveau post</RouterLink>
-    <section class="d-flex container  flex-wrap">
+    <section class="container">
         <PostCard v-for="post in posts" :key="post.id" :post="post"/>
         <p v-if="posts.length == 0">Pas de post pour le moment</p>
     </section>
@@ -34,3 +34,17 @@
 
 
 </script>
+
+<style scoped>
+    section.container{
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    @media (max-width: 543px){
+        section.container{
+            display: block;
+        }
+
+    }
+</style>

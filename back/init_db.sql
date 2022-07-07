@@ -38,16 +38,13 @@ insert into user  VALUES
 (NULL, 'Legrand', 'Sofian', 'legrand@gmail.com', "$2b$10$xvACjLeYLAWv5FWmBapYe.AnYVPhop3L1.K3WE00F..JL3yvujnqy", 1, NOW() )
 ;
 insert into post (title, content, image, id_author, created_at) VALUES
-("titre", "fgdoifdoigj", "http://localhost:3000/images/DIDI.jpg", 2, NOW() ),
-("titre2", "fgdoifdoigj", "http://localhost:3000/images/DIDI.jpg", 1, NOW() ),
-("titre3", "fgdoifdoigj", NULL, 2 , NOW() ),
-("titre4", "fgdoifdoigj", "http://localhost:3000/images/DIDI.jpg", 1, NOW() ),
-("titre5", "fgdoifdoigj", "http://localhost:3000/images/DIDI.jpg", 2, NOW() )
+("Nouveau", "Bonjour, je suis nouveau", "http://localhost:3000/images/Coucou.jpg", 1, NOW() ),
+("Que pensez vous de ça ?", "Jolie tasse pour le café", "http://localhost:3000/images/tasse.jpg", 2, NOW() )
 ;
 
 insert into comment (content, id_author, id_post, created_at) VALUES
-("Contenu", 1, 1, NOW()),
-("Contenu1", 1, 1, NOW()),
-("Contenu2", 1, 1, NOW()),
-("Contenu3", 1, 1, NOW())
+("Bienvenu", 2, 1, NOW()),
+("Bienvenue", 3, 1, NOW()),
+("Pas mal", 1, 2, NOW()),
+("Jolie je la veux!", 3, 2, NOW())
 

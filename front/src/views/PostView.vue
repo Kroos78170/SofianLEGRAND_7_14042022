@@ -72,4 +72,10 @@
   margin-left : 15px;
   margin-top : 30px;
 }
+img{
+  display: block;
+  max-height: 600px;
+  max-width: 800px;
+  margin: 20px auto;
+}
 </style>
